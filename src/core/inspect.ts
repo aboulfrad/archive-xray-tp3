@@ -1,5 +1,6 @@
 import { LIMITS, type ArchiveAnalysis, type ArchiveEntry, type Finding } from './types';
 import { parseZip, readEntry, unsafePath } from './zip';
+import { imagePreviewAllowed } from './image';
 
 export function metadataFindings(entries: ArchiveEntry[]): Finding[] {
   const findings: Finding[] = [];
@@ -311,8 +312,22 @@ export async function inspectArchive(
           e.kind === 'image' &&
           !mismatch &&
           /\.(png|jpe?g|gif|webp)$/i.test(e.path.replaceAll('\\', '/'))
-        )
-          e.bytes = bytes;
+        ) {
+          if (imagePreviewAllowed(bytes, e.path)) e.bytes = bytes;
+          else {
+            e.reason =
+              'Aperçu refusé : dimensions inconnues ou supérieures à 4 millions de pixels / 8192 px';
+            findings.push({
+              id: `${e.id}:image-bounds`,
+              rule: 'image-bounds',
+              severity: 'warning',
+              title: 'Dimensions d’image non acceptées',
+              detail: e.reason,
+              fileId: e.id,
+              path: e.path,
+            });
+          }
+        }
         if (!e.text && !e.bytes && !e.reason && bytes.length) e.reason = 'Format sans aperçu';
         e.inspected = true;
         inspectedCount++;

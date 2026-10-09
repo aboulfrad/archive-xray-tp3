@@ -3,15 +3,16 @@
 > playwright test
 
 
-Running 6 tests using 1 worker
+Running 7 tests using 1 worker
 
-(node:3132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:6114) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 e2e/app.spec.ts:7:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (3.5s)
-  ✓  2 e2e/app.spec.ts:38:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (1.3s)
-  ✓  3 e2e/app.spec.ts:57:1 › une archive invalide ne casse pas la prochaine importation (708ms)
-  ✓  4 e2e/app.spec.ts:64:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (1.0s)
-  ✓  5 e2e/app.spec.ts:76:1 › interface mobile sans débordement horizontal (1.1s)
-  ✓  6 e2e/app.spec.ts:85:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (644ms)
+  ✓  1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (2.0s)
+  ✓  2 e2e/app.spec.ts:73:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (1.2s)
+  ✓  3 e2e/app.spec.ts:120:1 › une archive invalide ne casse pas la prochaine importation (741ms)
+  ✓  4 e2e/app.spec.ts:143:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (1.0s)
+  ✓  5 e2e/app.spec.ts:183:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (936ms)
+  ✓  6 e2e/app.spec.ts:213:1 › interface mobile sans débordement horizontal (830ms)
+  ✓  7 e2e/app.spec.ts:230:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (574ms)
 
-  6 passed (16.8s)
+  7 passed (8.3s)

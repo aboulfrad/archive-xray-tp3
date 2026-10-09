@@ -1,0 +1,18 @@
+
+> archive-xray@1.0.0 test:e2e
+> playwright test
+
+
+Running 7 tests using 1 worker
+
+(node:6054) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (1.9s)
+  ✓  2 e2e/app.spec.ts:73:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (787ms)
+  ✓  3 e2e/app.spec.ts:120:1 › une archive invalide ne casse pas la prochaine importation (332ms)
+  ✓  4 e2e/app.spec.ts:143:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (683ms)
+  ✓  5 e2e/app.spec.ts:183:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (735ms)
+  ✓  6 e2e/app.spec.ts:213:1 › interface mobile sans débordement horizontal (439ms)
+  ✓  7 e2e/app.spec.ts:230:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (35ms)
+
+  7 passed (7.0s)

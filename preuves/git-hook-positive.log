@@ -1,0 +1,176 @@
+
+> archive-xray@1.0.0 check
+> npm run format:check && npm run lint && npm run typecheck && npm run proof:mcp && npm run proof:harness && npm run test:coverage && vite build
+
+
+> archive-xray@1.0.0 format:check
+> prettier --check src test e2e scripts *.md *.ts *.js *.json
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> archive-xray@1.0.0 lint
+> eslint .
+
+
+> archive-xray@1.0.0 typecheck
+> tsc --noEmit
+
+
+> archive-xray@1.0.0 proof:mcp
+> node scripts/mcp-proof.mjs
+
+{
+  "time": "2026-10-09T03:35:54.705Z",
+  "transport": "stdio",
+  "client": "SDK MCP officiel, pas un appel de modèle",
+  "tools": [
+    "read_contract",
+    "explain_check"
+  ],
+  "contractRead": true,
+  "example": {
+    "content": [
+      {
+        "type": "text",
+        "text": "CRC32 et taille réelle contrôlés après lecture. Le CRC détecte des corruptions mais ne constitue pas une preuve cryptographique."
+      }
+    ]
+  },
+  "arbitrarySelectorRejected": true
+}
+
+> archive-xray@1.0.0 proof:harness
+> node scripts/harness-proof.mjs
+
+(node:4367) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-runtime/.opencode/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{
+  "time": "2026-10-09T03:35:57.642Z",
+  "scope": "Hooks appelés directement par un test de composant ; aucun déclenchement dans une session OpenCode revendiqué.",
+  "secretReadDenied": true,
+  "outsideProjectDenied": true,
+  "falseGreenDenied": true,
+  "realTypeErrorBlocked": true,
+  "validTypecheckAccepted": true
+}
+
+> archive-xray@1.0.0 test:coverage
+> vitest run --coverage
+
+
+ RUN  v5.0.3 /private/tmp/archive-xray-runtime
+      Coverage enabled with v8
+
+
+ Test Files  3 passed (3)
+      Tests  87 passed (87)
+   Start at  05:35:58
+   Duration  505ms (tests 69%, transform 21%, import 5%, worker 5%)
+
+ % Coverage report from v8
+------------|---------|----------|---------|---------|-----------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s     
+------------|---------|----------|---------|---------|-----------------------
+All files   |    99.5 |    97.26 |     100 |     100 |                       
+ inspect.ts |     100 |    99.18 |     100 |     100 | 327                   
+ project.ts |     100 |    92.77 |     100 |     100 | 21,47,196,231,287-296 
+ zip.ts     |    98.8 |    97.87 |     100 |     100 | 23,192,240            
+------------|---------|----------|---------|---------|-----------------------
+
+=============================== Coverage summary ===============================
+Statements   : 99.5% ( 404/406 )
+Branches     : 97.26% ( 355/365 )
+Functions    : 100% ( 66/66 )
+Lines        : 100% ( 368/368 )
+================================================================================
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 1586 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           0.67 kB │ gzip:  0.42 kB
+dist/assets/archive.worker-BZyBuJ9W.js   26.15 kB
+dist/assets/index-DajWVbRT.css           31.97 kB │ gzip:  7.71 kB
+dist/assets/index-kSSdWw-a.js           275.52 kB │ gzip: 86.14 kB
+✓ built in 888ms
+[main (root-commit) 7fea230] feat: livrer Archive X-Ray, son harness et ses preuves
+ 76 files changed, 12484 insertions(+)
+ create mode 100644 .agents/skills/archive-inspection/SKILL.md
+ create mode 100644 .dockerignore
+ create mode 100644 .env.example
+ create mode 100755 .githooks/pre-commit
+ create mode 100644 .github/workflows/ci.yml
+ create mode 100644 .gitignore
+ create mode 100644 .opencode/agents/builder.md
+ create mode 100644 .opencode/agents/planner.md
+ create mode 100644 .opencode/agents/reviewer.md
+ create mode 100644 .opencode/commands/check.md
+ create mode 100644 .opencode/commands/demo.md
+ create mode 100644 .opencode/plugins/validation.js
+ create mode 100644 .prettierignore
+ create mode 100644 .prettierrc.json
+ create mode 100644 AGENTS.md
+ create mode 100644 DESIGN.md
+ create mode 100644 Dockerfile
+ create mode 100644 PITCH.md
+ create mode 100644 README.md
+ create mode 100644 RENDU.md
+ create mode 100644 SECURITY.md
+ create mode 100644 TESTPLAN.md
+ create mode 100644 captures/01-accueil.png
+ create mode 100644 captures/02-inspection.png
+ create mode 100644 captures/03-checklist.png
+ create mode 100644 captures/04-explorateur.png
+ create mode 100644 captures/05-comparaison.png
+ create mode 100644 captures/06-alertes.png
+ create mode 100644 captures/07-mobile.png
+ create mode 100644 e2e/app.spec.ts
+ create mode 100644 eslint.config.js
+ create mode 100644 index.html
+ create mode 100644 opencode.json
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 playwright.config.ts
+ create mode 100644 preuves/audit.json
+ create mode 100644 preuves/check.log
+ create mode 100644 preuves/e2e-public.log
+ create mode 100644 preuves/e2e.json
+ create mode 100644 preuves/git-hook-negative.log
+ create mode 100644 preuves/git-hook.json
+ create mode 100644 preuves/harness.json
+ create mode 100644 preuves/mcp.json
+ create mode 100644 preuves/opencode-mcp.log
+ create mode 100644 preuves/railway-deployment.json
+ create mode 100644 preuves/real-rendu.json
+ create mode 100644 public/demos/archive-piegee.zip
+ create mode 100644 public/demos/projet-complet.zip
+ create mode 100644 public/demos/projet-version-2.zip
+ create mode 100644 public/demos/rendu-incomplet.zip
+ create mode 100644 public/favicon.svg
+ create mode 100644 railway.toml
+ create mode 100644 scripts/demos.mjs
+ create mode 100644 scripts/harness-proof.mjs
+ create mode 100644 scripts/install-hooks.mjs
+ create mode 100644 scripts/mcp-proof.mjs
+ create mode 100644 scripts/mcp-server.mjs
+ create mode 100644 scripts/serve.mjs
+ create mode 100644 src/App.tsx
+ create mode 100644 src/archive.worker.ts
+ create mode 100644 src/components/FileTree.tsx
+ create mode 100644 src/components/Preview.tsx
+ create mode 100644 src/core/export.ts
+ create mode 100644 src/core/inspect.ts
+ create mode 100644 src/core/project.ts
+ create mode 100644 src/core/types.ts
+ create mode 100644 src/core/zip.ts
+ create mode 100644 src/main.tsx
+ create mode 100644 src/style.css
+ create mode 100644 test/helpers.ts
+ create mode 100644 test/inspect.spec.ts
+ create mode 100644 test/project.spec.ts
+ create mode 100644 test/zip.spec.ts
+ create mode 100644 tsconfig.json
+ create mode 100644 vite.config.ts

@@ -180,6 +180,36 @@ test('le diff ne dévoile pas les secrets et la prévisualisation résiste à be
   await expect(page.locator('.code-line')).toHaveCount(2000);
 });
 
+test('aperçu PNG réel et refus d’une image aux dimensions excessives', async ({ page }) => {
+  const image = await readFile('captures/01-accueil.png');
+  const oversized = Buffer.from(image);
+  oversized.writeUInt32BE(16000, 16);
+  oversized.writeUInt32BE(16000, 20);
+  await page.goto('/');
+  await page
+    .locator('input[type=file]')
+    .first()
+    .setInputFiles({
+      name: 'images.zip',
+      mimeType: 'application/zip',
+      buffer: Buffer.from(
+        zipSync({ 'normal.png': image, 'oversized.png': oversized }, { level: 0 }),
+      ),
+    });
+  await expect(page.getByRole('heading', { name: 'images.zip', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Explorateur', exact: true }).click();
+  await page.locator('.tree-row').filter({ hasText: 'normal.png' }).click();
+  const preview = page.getByRole('img', { name: 'Aperçu de normal.png' });
+  await expect(preview).toBeVisible();
+  await expect
+    .poll(() => preview.evaluate((image: HTMLImageElement) => image.naturalWidth))
+    .toBeGreaterThan(0);
+  await page.locator('.tree-row').filter({ hasText: 'oversized.png' }).click();
+  await expect(page.getByRole('heading', { name: 'Aucun aperçu disponible' })).toBeVisible();
+  await expect(page.locator('.empty-reader')).toContainText('4 millions');
+  await expect(page.locator('.image-preview img')).toHaveCount(0);
+});
+
 test('interface mobile sans débordement horizontal', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');

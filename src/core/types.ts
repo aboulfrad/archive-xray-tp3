@@ -66,4 +66,6 @@ export const LIMITS = Object.freeze({
   contentBudget: 12 * 1024 * 1024,
   ratio: 200,
   exportBytes: 32 * 1024 * 1024,
+  imageSide: 8192,
+  imagePixels: 4_000_000,
 });

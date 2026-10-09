@@ -9,6 +9,7 @@ Les résultats d’exécution sont conservés dans preuves/. Une configuration o
 | Ressources | Taille déclarée falsifiée, expansion disproportionnée, trop d’entrées, profondeur, budgets | Lecture interrompue ou explicitement exclue                               |
 | Noms       | ../, absolu POSIX/Windows, backslashes, ADS, Unicode invisible, collisions                 | Constat localisé, export refusé si chemin dangereux                       |
 | Contenus   | Binaire, UTF-8 invalide, SVG et Markdown actifs, fausses signatures                        | Aperçu inerte ou absent ; aucune ressource externe                        |
+| Images     | Dimensions nulles, inconnues, tronquées et excessives ; PNG/JPEG/GIF/WebP                  | Aucun décodage demandé avant signature et dimensions acceptées            |
 | Secrets    | Tokens, clés, affectations, URI, exemples évidents                                         | Heuristiques expliquées, valeurs masquées par défaut et dans rapport/diff |
 | Checklist  | Profils projet/TP1/TP2/TP3, dépendances, README/manifeste/tests/CI/harness                 | Présence seule ; aucun verdict d’exécution ou de note                     |
 | Diff       | Racines distinctes, ajout/suppression/modification/identité, doublons                      | Résultats explicables, aucun chemin silencieusement perdu                 |

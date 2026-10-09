@@ -1,5 +1,6 @@
 {
   "scope": "Vraie tentative de git commit, hook pre-commit déclenché automatiquement",
   "invalidTypeRejected": true,
-  "exitCode": 1
+  "exitCode": 1,
+  "validCommitAccepted": true
 }

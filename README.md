@@ -20,6 +20,8 @@ npm start
 
 Ouvrir http://localhost:3000. Développement : `npm run dev` (http://localhost:5173). Le port production se configure avec `PORT`.
 
+Le ZIP de rendu contient aussi `dist/` : avec Node.js installé, `npm start` suffit pour lancer cette version compilée, sans installer les dépendances. Les commandes ci-dessus permettent de la reconstruire depuis les sources.
+
 ## Utiliser
 
 Déposer un ZIP, ou ouvrir l’une des trois démonstrations. La quatrième archive, `public/demos/projet-version-2.zip`, sert à la comparaison (bouton dédié). Explorer les fichiers, rechercher dans les contenus lus, ajouter des annotations puis télécharger un rapport Markdown. L’export ZIP reconstruit les fichiers choisis sans modifier leurs octets ; il ne nettoie pas les secrets de fichiers conservés.
@@ -70,7 +72,7 @@ Le MCP de développement expose seulement `read_contract` et `explain_check`, sa
 
 ## Limites
 
-ZIP classique, STORE/DEFLATE. ZIP64, remplacements Unicode de noms (champ 0x7075) et multi-volumes refusés. Limites : 64 Mio compressés, 2500 entrées, 256 Mio annoncés, 1 Mio lu par fichier, 12 Mio cumulés, 20 secondes par opération. Export jusqu’à 32 Mio. Pas d’analyse récursive, déchiffrement, exécution de tests importés ou antivirus. Les règles de secrets peuvent manquer des valeurs ou signaler des exemples.
+ZIP classique, STORE/DEFLATE. ZIP64, remplacements Unicode de noms (champ 0x7075) et multi-volumes refusés. Limites : 64 Mio compressés, 2500 entrées, 256 Mio annoncés, 1 Mio lu par fichier, 12 Mio cumulés, 20 secondes par opération. Export jusqu’à 32 Mio. Les aperçus PNG/JPEG/GIF/WebP exigent une signature et des dimensions lisibles, au maximum 4 millions de pixels et 8192 pixels par côté. Pas d’analyse récursive, déchiffrement, exécution de tests importés ou antivirus. Les règles de secrets peuvent manquer des valeurs ou signaler des exemples.
 
 ## Technologies
 

@@ -174,13 +174,48 @@ describe('inspection bornée', () => {
     },
   );
   test.each([
-    ['real.png', new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])],
-    ['real.jpg', new Uint8Array([255, 216, 255])],
-    ['real.gif', encode('GIF89a')],
-    ['real.webp', encode('RIFFxxxxWEBP')],
-  ])('autorise l’aperçu uniquement après signature %s', async (name, bytes) => {
+    [
+      'header.png',
+      new Uint8Array([
+        137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2,
+        0, 0, 0, 0, 0, 0, 0,
+      ]),
+    ],
+    ['header.jpg', new Uint8Array([255, 216, 255, 192, 0, 8, 8, 0, 1, 0, 1, 0])],
+    ['header.gif', new Uint8Array([...encode('GIF89a'), 1, 0, 1, 0, 0, 0, 0])],
+    [
+      'header.webp',
+      new Uint8Array([
+        ...encode('RIFF'),
+        18,
+        0,
+        0,
+        0,
+        ...encode('WEBPVP8L'),
+        5,
+        0,
+        0,
+        0,
+        47,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]),
+    ],
+  ])('autorise l’aperçu après signature et dimensions bornées %s', async (name, bytes) => {
     const a = await inspectArchive(zip({ [name]: bytes }), 'images.zip');
     expect(a.entries[0]!.bytes).toEqual(bytes);
     expect(a.findings).toEqual([]);
+  });
+  test('refuse une image à signature valide mais aux dimensions illisibles', async () => {
+    const a = await inspectArchive(
+      zip({ 'truncated.png': new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10]) }),
+      'image.zip',
+    );
+    expect(a.entries[0]!.bytes).toBeUndefined();
+    expect(a.entries[0]!.reason).toContain('dimensions');
+    expect(a.findings.some((f) => f.rule === 'image-bounds')).toBe(true);
   });
 });
