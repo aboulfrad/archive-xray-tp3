@@ -376,12 +376,12 @@ export async function inspectArchive(
           if (imagePreviewAllowed(bytes, e.path)) e.bytes = bytes;
           else {
             e.reason =
-              'Aperçu refusé : dimensions inconnues ou supérieures à 4 millions de pixels / 8192 px';
+              'Aperçu désactivé pour limiter la mémoire : dimensions non reconnues ou supérieures à 4 millions de pixels / 8192 px. Cela ne prouve pas que l’image est dangereuse ; elle reste exportable.';
             addFindings({
               id: `${e.id}:image-bounds`,
               rule: 'image-bounds',
-              severity: 'warning',
-              title: 'Dimensions d’image non acceptées',
+              severity: 'info',
+              title: 'Aperçu d’image désactivé',
               detail: e.reason,
               fileId: e.id,
               path: e.path,

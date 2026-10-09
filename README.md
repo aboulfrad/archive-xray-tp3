@@ -26,9 +26,15 @@ Le ZIP de rendu contient aussi `dist/` : avec Node.js installé, `npm start` suf
 
 ## Utiliser
 
-Déposer un ZIP, ou ouvrir l’une des trois démonstrations. La quatrième archive, `public/demos/projet-version-2.zip`, sert à la comparaison (bouton dédié). Explorer les fichiers, rechercher dans les contenus lus, ajouter des annotations puis télécharger un rapport Markdown. L’export ZIP reconstruit les fichiers choisis sans modifier leurs octets ; il ne nettoie pas les secrets de fichiers conservés.
+Déposer un ZIP, ou ouvrir l’une des quatre démonstrations. **Les cas de figure** (`public/demos/cas-de-figure.zip`) réunit des exemples synthétiques à examiner. Une cinquième archive, `public/demos/projet-version-2.zip`, sert à essayer la comparaison. Pour l’oral, le guide utilise seulement le TP1 personnel et le ZIP Cas de figure. Explorer les fichiers, rechercher dans les contenus lus, ajouter des annotations puis télécharger un rapport Markdown. L’export ZIP reconstruit les fichiers choisis sans modifier leurs octets ; il ne nettoie pas les secrets de fichiers conservés.
 
-Les profils projet/TP1/TP2/TP3 donnent une checklist de présence. Ils n’attribuent aucune note et ne prouvent pas l’exécution des tests, MCP, hooks ou CI du rendu.
+La checklist s’adapte au ZIP : **Projet** pour des repères génériques, **Site web** pour un site, **Personnalisée** pour vos propres attentes. Les profils TP1/TP2/TP3 restent disponibles en option pour le cours.
+
+En mode personnalisé, ajouter jusqu’à 20 règles : un nom de fichier (par exemple `README.md`), une extension (`.html`) ou un dossier contenant des fichiers (`assets`). Chaque règle donne les fichiers correspondants ou indique leur absence. Les correspondances sont littérales, sans expression régulière. Le libellé est limité à 80 caractères et la cible à 160 caractères.
+
+La checklist ne juge pas la qualité et n’attribue aucune note : un fichier trouvé ne prouve pas que le projet fonctionne, ni que ses tests, MCP, hooks ou CI ont été exécutés. Le profil et les règles personnalisées sont conservés dans le navigateur ; les ZIP, leurs contenus et les annotations ne le sont pas.
+
+Une image dont les dimensions sont inconnues ou dépassent les limites conserve sa place dans l’inventaire, mais son aperçu est désactivé pour limiter la mémoire utilisée. Ce message ne signifie pas que l’image est malveillante. Son fichier original reste exportable si les autres contrôles l’autorisent.
 
 ## Vérifier
 
@@ -66,8 +72,9 @@ Documentation : [Dockerfiles](https://docs.railway.com/guides/dockerfiles), [dom
 - SECURITY.md : menaces et limites.
 - TESTPLAN.md : scénarios d’acceptation.
 - PITCH.md : démo et réponses pour l’oral.
+- DEMO-ORAL.md : parcours de 4 à 5 minutes avec un TP1 personnel et le ZIP synthétique Cas de figure.
 - RENDU.md : correspondance TP3 et état exact des preuves.
-- AGENTS.md, .agents/skills/, opencode.json, .opencode/ : harness de reprise ; développement actuel en solo.
+- AGENTS.md, .agents/skills/, opencode.json, .opencode/ : harness de reprise ; première version développée en solo, puis révision ciblée avec des agents autorisée par l’auteur.
 - preuves/check.log, preuves/mcp.json, preuves/harness.json, preuves/e2e.json et captures/ : résultats réels lorsque générés.
 
 Le MCP de développement expose seulement `read_contract` et `explain_check`, sans chemin libre, shell ou rendu personnel. `npm run proof:mcp` est un échange réel SDK client/serveur. `proof:harness` teste directement les hooks : cela ne prouve pas leur déclenchement dans une session OpenCode. La configuration CI n’est pas une preuve de run distant.

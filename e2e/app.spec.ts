@@ -30,6 +30,7 @@ test('parcours complet : inspection, recherche, annotation, rapport, diff et exp
   await expect(page.getByText('14 contenus lus et contrôlés', { exact: true })).toBeVisible();
   await page.screenshot({ path: 'captures/02-inspection.png', fullPage: true });
   await page.getByRole('button', { name: 'Checklist du rendu', exact: true }).click();
+  await page.getByRole('combobox', { name: 'Type de checklist', exact: true }).selectOption('tp3');
   await expect(page.locator('.check-card.found')).toHaveCount(12);
   await page.screenshot({ path: 'captures/03-checklist.png', fullPage: true });
   await page.getByRole('button', { name: 'Explorateur', exact: true }).click();
@@ -267,4 +268,113 @@ test('les alertes répétées restent bornées et le fichier suspect reste exclu
   await page.getByRole('button', { name: 'Rapport & export', exact: true }).click();
   const keyRow = page.locator('.selection-list label').filter({ hasText: 'keys.txt' });
   await expect(keyRow.locator('input[type=checkbox]')).not.toBeChecked();
+});
+
+test('checklist personnelle : critères, rapport masqué et configuration réutilisable', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const load = async () => {
+    await page
+      .locator('input[type=file]')
+      .first()
+      .setInputFiles({
+        name: 'site.zip',
+        mimeType: 'application/zip',
+        buffer: sample({ 'site/index.html': '<h1>Hello</h1>', 'site/assets/style.css': 'body{}' }),
+      });
+    await expect(page.getByRole('heading', { name: 'site.zip', exact: true })).toBeVisible();
+    await page.getByRole('button', { name: 'Checklist du rendu', exact: true }).click();
+  };
+  await load();
+  await page.getByRole('combobox', { name: 'Type de checklist', exact: true }).selectOption('web');
+  await expect(page.locator('.check-card').filter({ hasText: 'Page d’accueil' })).toHaveClass(
+    /found/,
+  );
+  await expect(page.getByText('Configuration OpenCode / MCP', { exact: true })).toHaveCount(0);
+  await page
+    .getByRole('combobox', { name: 'Type de checklist', exact: true })
+    .selectOption('custom');
+  await page.getByRole('textbox', { name: 'Nom du critère', exact: true }).fill('Page livrée');
+  await page.getByRole('textbox', { name: 'Valeur attendue', exact: true }).fill('index.html');
+  await page.getByRole('button', { name: 'Ajouter le critère', exact: true }).click();
+  await expect(page.locator('.check-card.found')).toContainText('Page livrée');
+  await page.getByRole('textbox', { name: 'Nom du critère', exact: true }).fill('Documents');
+  await page
+    .getByRole('combobox', { name: 'Type de critère', exact: true })
+    .selectOption('extension');
+  await page.getByRole('textbox', { name: 'Valeur attendue', exact: true }).fill('.pdf');
+  await page.getByRole('button', { name: 'Ajouter le critère', exact: true }).click();
+  await expect(page.locator('.check-card.missing')).toContainText('Documents');
+  await page.screenshot({ path: 'captures/08-checklist-personnelle.png', fullPage: true });
+  await page.reload();
+  await expect(
+    page.getByRole('heading', { name: 'Voir ce que votre archive contient vraiment.' }),
+  ).toBeVisible();
+  await load();
+  await expect(page.locator('.check-card.found')).toContainText('Page livrée');
+  await expect(page.locator('.check-card.missing')).toContainText('Documents');
+  await page.getByRole('button', { name: 'Supprimer le critère Documents', exact: true }).click();
+  await expect(page.locator('.check-card')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Rapport & export', exact: true }).click();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Télécharger le rapport .md', exact: true }).click();
+  const report = await readFile((await (await download).path())!, 'utf8');
+  expect(report).toContain('Page livrée');
+  expect(report).toContain('index.html');
+  expect(report).not.toContain('Documents');
+});
+
+test('image illisible : message de repli, sans exception ni blocage de l’interface', async ({
+  page,
+}) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  const image = Buffer.alloc(33);
+  image.set([137, 80, 78, 71, 13, 10, 26, 10]);
+  image.writeUInt32BE(13, 8);
+  image.write('IHDR', 12);
+  image.writeUInt32BE(1, 16);
+  image.writeUInt32BE(1, 20);
+  await page.goto('/');
+  await page
+    .locator('input[type=file]')
+    .first()
+    .setInputFiles({
+      name: 'image-illisible.zip',
+      mimeType: 'application/zip',
+      buffer: Buffer.from(zipSync({ 'corrupt.png': image }, { level: 0 })),
+    });
+  await expect(
+    page.getByRole('heading', { name: 'image-illisible.zip', exact: true }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Explorateur', exact: true }).click();
+  await page.locator('.tree-row').filter({ hasText: 'corrupt.png' }).click();
+  await expect(page.locator('.empty-reader')).toContainText('ne parvient pas à décoder');
+  await page.getByRole('button', { name: 'Vue d’ensemble', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: 'image-illisible.zip', exact: true }),
+  ).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('archive des cas de figure : explications et rapport sans secrets fictifs', async ({
+  page,
+}) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Les cas de figure/ }).click();
+  await expect(page.getByRole('heading', { name: 'cas-de-figure.zip', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: /Points d’attention/ }).click();
+  await expect(
+    page.getByText('Chemin d’extraction dangereux', { exact: true }).first(),
+  ).toBeVisible();
+  await expect(page.getByText('Aperçu d’image désactivé', { exact: true })).toBeVisible();
+  await page.screenshot({ path: 'captures/09-cas-de-figure.png', fullPage: true });
+  await page.getByRole('button', { name: 'Rapport & export', exact: true }).click();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Télécharger le rapport .md', exact: true }).click();
+  const report = await readFile((await (await download).path())!, 'utf8');
+  expect(report).not.toContain('FictitiousValue9123');
+  expect(report).toContain('CRC');
+  expect(report).toContain('Aperçu d’image désactivé');
 });

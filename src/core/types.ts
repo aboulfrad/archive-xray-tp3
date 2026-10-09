@@ -40,7 +40,7 @@ export interface ArchiveAnalysis {
   contentBytes: number;
   inspectedCount: number;
 }
-export type Profile = 'project' | 'tp1' | 'tp2' | 'tp3';
+export type Profile = 'project' | 'web' | 'custom' | 'tp1' | 'tp2' | 'tp3';
 export interface ChecklistItem {
   id: string;
   label: string;

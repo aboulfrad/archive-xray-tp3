@@ -6,7 +6,9 @@ import type {
   ComparisonEntry,
   Profile,
 } from './types';
+import { customChecklist, type ChecklistRule } from './checklist';
 import { redactText } from './inspect';
+import { unsafePath } from './zip';
 
 export function projectRoot(entries: ArchiveEntry[]): string {
   const paths = entries
@@ -20,13 +22,22 @@ export function relativePath(e: ArchiveEntry, entries: ArchiveEntry[]): string {
   const path = e.path.replaceAll('\\', '/');
   return (path.startsWith(root) ? path.slice(root.length) : path).normalize('NFC');
 }
-export function checklist(analysis: ArchiveAnalysis, profile: Profile): ChecklistItem[] {
+export function checklist(
+  analysis: ArchiveAnalysis,
+  profile: Profile,
+  rules: ChecklistRule[] = [],
+): ChecklistItem[] {
+  if (profile === 'custom') return customChecklist(analysis.entries, rules);
   const fileEntries = analysis.entries.filter(
     (e) =>
       !e.directory &&
-      !/(^|\/)(node_modules|\.git|\.venv|venv|__pycache__|dist|build|__MACOSX)(\/|$)/.test(
-        e.path.replaceAll('\\', '/'),
-      ),
+      !e.symlink &&
+      !unsafePath(e.path) &&
+      !(
+        profile === 'web'
+          ? /(^|\/)(node_modules|\.git|\.venv|venv|__pycache__|__MACOSX)(\/|$)/
+          : /(^|\/)(node_modules|\.git|\.venv|venv|__pycache__|dist|build|__MACOSX)(\/|$)/
+      ).test(e.path.replaceAll('\\', '/')),
   );
   const root = projectRoot(fileEntries);
   const add = (
@@ -85,6 +96,33 @@ export function checklist(analysis: ArchiveAnalysis, profile: Profile): Checklis
         ),
     ),
   ];
+  if (profile === 'web')
+    return [
+      add(
+        'web-page',
+        'Page d’accueil',
+        'index.html ou index.htm repéré ; affichage à vérifier.',
+        (p) => /(^|\/)index\.html?$/.test(p),
+      ),
+      add(
+        'web-style',
+        'Styles du site',
+        'Feuilles CSS ou SCSS repérées ; elles peuvent être facultatives.',
+        (p) => /\.(css|scss)$/.test(p),
+      ),
+      add(
+        'web-script',
+        'Scripts du site',
+        'JavaScript ou TypeScript repéré ; facultatif pour un site statique.',
+        (p) => /\.(js|mjs|ts|jsx|tsx)$/.test(p),
+      ),
+      add(
+        'web-readme',
+        'Instructions du site',
+        'README repéré ; utile pour savoir lancer ou publier le site.',
+        (p) => /(^|\/)readme(?:\.md|\.txt)?$/.test(p),
+      ),
+    ];
   if (profile !== 'project') {
     items.push(
       add('rules', 'Règles du projet', 'AGENTS.md ou règles de projet repérés.', (p) =>
@@ -275,6 +313,7 @@ export function createReport(
   analysis: ArchiveAnalysis,
   profile: Profile,
   annotations: Annotation[] = [],
+  rules: ChecklistRule[] = [],
 ): string {
   const cell = (s: string) => {
     const text = redactText(s).replaceAll('|', '\\|').replaceAll('\n', ' ').replaceAll('\r', ' ');
@@ -284,7 +323,7 @@ export function createReport(
     return `${fence} ${text} ${fence}`;
   };
   const files = analysis.entries.filter((e) => !e.directory);
-  const items = checklist(analysis, profile);
+  const items = checklist(analysis, profile, rules);
   const lines = [
     '# Archive X-Ray — rapport d’inspection',
     '',
@@ -302,7 +341,7 @@ export function createReport(
     '|---|---|',
     ...items.map(
       (i) =>
-        `| ${cell(i.label)} | ${i.status === 'missing' ? 'Non repéré' : 'Repéré, exécution non vérifiée'} |`,
+        `| ${cell(i.label)}${profile === 'custom' ? ` — ${cell(i.description)}` : ''} | ${i.status === 'missing' ? 'Non repéré' : 'Repéré, exécution non vérifiée'} |`,
     ),
     '',
     '## Constats',

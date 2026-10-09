@@ -1,0 +1,107 @@
+{
+  "scope": "Local HTTP test, private TP1 archive, aggregate information only; no screenshots or uploaded content",
+  "fileReadMs": 4,
+  "importMs": 1150,
+  "overview": {
+    "nodes": 265,
+    "heap": 68294476,
+    "bodyLength": 1796
+  },
+  "views": [
+    {
+      "view": "Explorateur",
+      "ms": 368,
+      "responsive": true
+    },
+    {
+      "view": "Checklist du rendu",
+      "ms": 276,
+      "responsive": true
+    },
+    {
+      "view": "Points d’attention",
+      "ms": 283,
+      "responsive": true
+    },
+    {
+      "view": "Rapport & export",
+      "ms": 281,
+      "responsive": true
+    },
+    {
+      "view": "Vue d’ensemble",
+      "ms": 281,
+      "responsive": true
+    }
+  ],
+  "matchingSearchResults": 9,
+  "imageTest": [
+    {
+      "index": 0,
+      "ms": 149,
+      "nativeImage": 0,
+      "refused": 0
+    },
+    {
+      "index": 1,
+      "ms": 137,
+      "nativeImage": 0,
+      "refused": 1
+    },
+    {
+      "index": 2,
+      "ms": 115,
+      "nativeImage": 1,
+      "refused": 0
+    },
+    {
+      "index": 3,
+      "ms": 115,
+      "nativeImage": 1,
+      "refused": 0
+    },
+    {
+      "index": 4,
+      "ms": 114,
+      "nativeImage": 1,
+      "refused": 0
+    },
+    {
+      "index": 5,
+      "ms": 114,
+      "nativeImage": 1,
+      "refused": 0
+    },
+    {
+      "index": 6,
+      "ms": 114,
+      "nativeImage": 1,
+      "refused": 0
+    },
+    {
+      "index": 7,
+      "ms": 115,
+      "nativeImage": 0,
+      "refused": 1
+    },
+    {
+      "index": 8,
+      "ms": 114,
+      "nativeImage": 1,
+      "refused": 0
+    }
+  ],
+  "end": {
+    "nodes": 237,
+    "heap": 80463373,
+    "bodyLength": 1311
+  },
+  "crashed": false,
+  "errors": [],
+  "failures": [],
+  "requests": 11,
+  "blobRequests": 6,
+  "networkSafe": true,
+  "archiveFileCount": 32,
+  "note": "Le blocage signalé dans Codex n’est pas reproduit en HTTP local. Les refus d’aperçu ne prouvent pas un danger. Aucun ZIP personnel ni nom interne n’est publié."
+}

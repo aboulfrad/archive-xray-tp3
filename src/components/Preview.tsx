@@ -42,8 +42,10 @@ function Markdown({ text }: { text: string }) {
 export default function Preview({ entry, focusLine }: { entry: ArchiveEntry; focusLine?: number }) {
   const [rendered, setRendered] = useState(true);
   const [masked, setMasked] = useState(true);
+  const [imageError, setImageError] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
   useEffect(() => {
+    setImageError(false);
     setMasked(true);
     setRendered(true);
     if (!entry.bytes) {
@@ -118,18 +120,22 @@ export default function Preview({ entry, focusLine }: { entry: ArchiveEntry; foc
         )}
       </>
     );
-  if (imageUrl)
+  if (imageUrl && !imageError)
     return (
       <div className="image-preview">
         <ImageIcon size={18} />
-        <img src={imageUrl} alt={`Aperçu de ${entry.path}`} />
+        <img src={imageUrl} alt={`Aperçu de ${entry.path}`} onError={() => setImageError(true)} />
       </div>
     );
   return (
     <div className="empty-reader">
       <FileQuestion size={38} />
       <h3>Aucun aperçu disponible</h3>
-      <p>{entry.reason ?? 'Ce format est inventorié mais ne possède pas de lecteur intégré.'}</p>
+      <p>
+        {imageError
+          ? 'Le navigateur ne parvient pas à décoder cette image. Les autres fichiers restent consultables.'
+          : (entry.reason ?? 'Ce format est inventorié mais ne possède pas de lecteur intégré.')}
+      </p>
       <span className="tag">Aucun fichier n’est exécuté</span>
     </div>
   );

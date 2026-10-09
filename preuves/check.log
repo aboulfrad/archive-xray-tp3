@@ -21,7 +21,7 @@ All matched files use Prettier code style!
 > node scripts/mcp-proof.mjs
 
 {
-  "time": "2026-10-09T04:38:06.842Z",
+  "time": "2026-10-09T10:22:07.470Z",
   "transport": "stdio",
   "client": "SDK MCP officiel, pas un appel de modèle",
   "tools": [
@@ -43,12 +43,12 @@ All matched files use Prettier code style!
 > archive-xray@1.0.0 proof:harness
 > node scripts/harness-proof.mjs
 
-(node:12247) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
+(node:17818) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-runtime/.opencode/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 {
-  "time": "2026-10-09T04:38:09.658Z",
+  "time": "2026-10-09T10:22:10.443Z",
   "scope": "Hooks appelés directement par un test de composant ; aucun déclenchement dans une session OpenCode revendiqué.",
   "secretReadDenied": true,
   "outsideProjectDenied": true,
@@ -65,34 +65,34 @@ To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-run
       Coverage enabled with v8
 
 
- Test Files  5 passed (5)
-      Tests  119 passed (119)
-   Start at  06:38:10
-   Duration  528ms (tests 59%, transform 27%, import 7%, worker 7%)
+ Test Files  7 passed (7)
+      Tests  130 passed (130)
+   Start at  12:22:10
+   Duration  563ms (tests 48%, transform 35%, import 9%, worker 8%)
 
  % Coverage report from v8
-------------|---------|----------|---------|---------|--------------------------
-File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s        
-------------|---------|----------|---------|---------|--------------------------
-All files   |   99.45 |    97.28 |     100 |     100 |                          
- inspect.ts |     100 |    99.31 |     100 |     100 | 403                      
- project.ts |   99.15 |     90.9 |     100 |     100 | ...9,193,208,251,312-321 
- zip.ts     |    98.9 |    97.93 |     100 |     100 | 23,207,255               
-------------|---------|----------|---------|---------|--------------------------
+--------------|---------|----------|---------|---------|------------------------
+File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s      
+--------------|---------|----------|---------|---------|------------------------
+All files     |   99.49 |    97.56 |     100 |     100 |                        
+ inspect.ts   |     100 |    99.31 |     100 |     100 | 403                    
+ project.ts   |   99.21 |    91.89 |     100 |     100 | ...231,246,289,351-360 
+ zip.ts       |    98.9 |    97.93 |     100 |     100 | 23,207,255             
+--------------|---------|----------|---------|---------|------------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.45% ( 552/555 )
-Branches     : 97.28% ( 465/478 )
-Functions    : 100% ( 71/71 )
-Lines        : 100% ( 493/493 )
+Statements   : 99.49% ( 588/591 )
+Branches     : 97.56% ( 520/533 )
+Functions    : 100% ( 83/83 )
+Lines        : 100% ( 524/524 )
 ================================================================================
 vite v7.3.7 building client environment for production...
 transforming...
-✓ 1587 modules transformed.
+✓ 1589 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                           0.67 kB │ gzip:  0.41 kB
-dist/assets/archive.worker-DY3b9H42.js   29.51 kB
-dist/assets/index-DajWVbRT.css           31.97 kB │ gzip:  7.71 kB
-dist/assets/index-DrorBiuX.js           276.18 kB │ gzip: 86.44 kB
-✓ built in 880ms
+dist/index.html                           0.96 kB │ gzip:  0.57 kB
+dist/assets/archive.worker-CeuS4w3P.js   29.60 kB
+dist/assets/index-BA_sMq25.css           32.68 kB │ gzip:  7.85 kB
+dist/assets/index-ClxFUtoK.js           281.86 kB │ gzip: 88.09 kB
+✓ built in 923ms

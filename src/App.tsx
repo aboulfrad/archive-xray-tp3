@@ -40,6 +40,8 @@ import { unsafePath, visibleName } from './core/zip';
 import { redactText } from './core/inspect';
 import Preview from './components/Preview';
 import FileTree from './components/FileTree';
+import ChecklistEditor from './components/ChecklistEditor';
+import { checklistRules, type ChecklistRule } from './core/checklist';
 
 type View = 'overview' | 'files' | 'findings' | 'checklist' | 'compare' | 'export' | 'about';
 const navigation: { id: View; label: string; icon: typeof ScanLine }[] = [
@@ -52,6 +54,8 @@ const navigation: { id: View; label: string; icon: typeof ScanLine }[] = [
 ];
 const profileLabels: Record<Profile, string> = {
   project: 'Projet informatique',
+  web: 'Site web',
+  custom: 'Ma checklist',
   tp1: 'TP1 · MCP & skills',
   tp2: 'TP2 · Harness',
   tp3: 'TP3 · Projet final',
@@ -222,11 +226,26 @@ export default function App() {
   const [profile, setProfile] = useState<Profile>(() => {
     try {
       const p = localStorage.getItem('xray-profile');
-      return p && Object.hasOwn(profileLabels, p) ? (p as Profile) : 'tp3';
+      return p && Object.hasOwn(profileLabels, p) ? (p as Profile) : 'project';
     } catch {
-      return 'tp3';
+      return 'project';
     }
   });
+  const [customRules, setCustomRules] = useState<ChecklistRule[]>(() => {
+    try {
+      const raw = localStorage.getItem('xray-checklist');
+      return raw && raw.length <= 16384 ? checklistRules(JSON.parse(raw)) : [];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('xray-checklist', JSON.stringify(customRules));
+    } catch {
+      /* Optional browser storage. */
+    }
+  }, [customRules]);
   const [busy, setBusy] = useState<string>();
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string>();
@@ -271,7 +290,10 @@ export default function App() {
     }),
     [analysis],
   );
-  const checks = useMemo(() => (analysis ? checklist(analysis, profile) : []), [analysis, profile]);
+  const checks = useMemo(
+    () => (analysis ? checklist(analysis, profile, customRules) : []),
+    [analysis, profile, customRules],
+  );
   const observations = useMemo(() => (analysis ? harnessObservations(analysis) : []), [analysis]);
   const comparison = useMemo(
     () => (analysis && second ? compareArchives(analysis, second) : []),
@@ -364,11 +386,12 @@ export default function App() {
       setError('Cette archive dépasse la limite de 64 Mo.');
       return;
     }
-    setBusy(`Analyse de ${file.name}`);
+    setBusy(`Lecture de ${file.name} sur cet appareil…`);
     const currentOperation = operation.current;
     try {
       const bytes = await file.arrayBuffer();
       if (currentOperation !== operation.current) return;
+      setBusy(`Analyse de ${file.name}`);
       beginWorker({ type: 'inspect', buffer: bytes, name: file.name }, (result) => {
         if (!result.analysis) return;
         if (compare) {
@@ -438,7 +461,7 @@ export default function App() {
   function report() {
     if (!analysis) return;
     download(
-      createReport(analysis, profile, annotations),
+      createReport(analysis, profile, annotations, customRules),
       `${analysis.name.replace(/\.zip$/i, '')}-rapport.md`,
     );
     setNotice('Rapport téléchargé. Les valeurs de secrets détectés ne sont pas incluses.');
@@ -601,6 +624,20 @@ export default function App() {
                 <span>Archives fictives, anomalies préparées</span>
               </div>
               <div className="demo-grid">
+                <button className="demo-card" onClick={() => void demo('cas-de-figure')}>
+                  <span className="demo-card-icon coral">
+                    <ShieldCheck size={22} />
+                  </span>
+                  <strong>Les cas de figure</strong>
+                  <p>
+                    Une archive pédagogique avec les principaux contrôles : chemins, secrets
+                    fictifs, intégrité et limites.
+                  </p>
+                  <span className="demo-footer">
+                    Démonstration pour l’oral
+                    <ChevronRight size={16} />
+                  </span>
+                </button>
                 <button className="demo-card" onClick={() => void demo('projet-complet')}>
                   <span className="demo-card-icon green">
                     <FileCode2 size={22} />
@@ -741,7 +778,7 @@ export default function App() {
                         <FolderTree className="stat-icon" size={22} />
                       </div>
                       <div className="stat-card">
-                        <span>VOLUME ANNONCÉ</span>
+                        <span>TAILLE DÉCLARÉE</span>
                         <strong>{formatBytes(analysis.totalSize)}</strong>
                         <small>{formatBytes(analysis.byteLength)} compressés</small>
                         <Archive className="stat-icon" size={22} />
@@ -753,9 +790,9 @@ export default function App() {
                           setView('findings');
                         }}
                       >
-                        <span>SIGNAUX BLOQUANTS</span>
+                        <span>LECTURE BLOQUÉE</span>
                         <strong>{counts.critical}</strong>
-                        <small>Lecture ou export à restreindre</small>
+                        <small>Constats empêchant la lecture ou l’export</small>
                         <ShieldX className="stat-icon" size={22} />
                       </button>
                       <button
@@ -767,7 +804,7 @@ export default function App() {
                       >
                         <span>À EXAMINER</span>
                         <strong>{counts.warning}</strong>
-                        <small>Indices à contextualiser</small>
+                        <small>Points nécessitant votre vérification</small>
                         <AlertTriangle className="stat-icon" size={22} />
                       </button>
                     </div>
@@ -775,7 +812,7 @@ export default function App() {
                       <section className="panel composition">
                         <div className="section-heading">
                           <h3>Composition de l’archive</h3>
-                          <span>Volumes annoncés</span>
+                          <span>Tailles déclarées dans le ZIP</span>
                         </div>
                         <div className="composition-bar">
                           {kinds.map((k, i) => (
@@ -802,14 +839,14 @@ export default function App() {
                       </section>
                       <section className="panel checklist-summary">
                         <div className="section-heading">
-                          <h3>Préparer la lecture</h3>
+                          <h3>Vérifier les fichiers attendus</h3>
                           <button className="quiet-button" onClick={() => setView('checklist')}>
                             Voir la checklist
                             <ChevronRight size={14} />
                           </button>
                         </div>
                         <label className="profile-select">
-                          Profil du rendu
+                          Type de checklist
                           <select
                             value={profile}
                             onChange={(e) => setProfile(e.target.value as Profile)}
@@ -839,7 +876,10 @@ export default function App() {
                             </button>
                           ))}
                         </div>
-                        <p className="panel-footnote">Présence repérée ≠ exécution vérifiée.</p>
+                        <p className="panel-footnote">
+                          Vérifie les fichiers attendus, pas leur qualité. Personnalisez les
+                          critères dans « Ma checklist ».
+                        </p>
                       </section>
                     </div>
                     <div className="section-heading lower-heading">
@@ -1000,15 +1040,16 @@ export default function App() {
                   <>
                     <div className="page-heading">
                       <div>
-                        <div className="eyebrow">PRÉPARER L’EXAMEN DU RENDU</div>
-                        <h1>La présence, pas la promesse.</h1>
+                        <div className="eyebrow">LES FICHIERS QUE VOUS ATTENDEZ</div>
+                        <h1>Vos critères, vos fichiers.</h1>
                         <p>
-                          Retrouvez les éléments attendus. Leur qualité et leur exécution restent à
-                          vérifier.
+                          Choisissez un modèle ou créez votre checklist. Les fichiers trouvés sont
+                          accessibles directement ; leur qualité reste à vérifier.
                         </p>
                       </div>
                       <select
                         className="standalone-select"
+                        aria-label="Type de checklist"
                         value={profile}
                         onChange={(e) => setProfile(e.target.value as Profile)}
                       >
@@ -1019,6 +1060,9 @@ export default function App() {
                         ))}
                       </select>
                     </div>
+                    {profile === 'custom' && (
+                      <ChecklistEditor rules={customRules} onChange={setCustomRules} />
+                    )}
                     <div className="checklist-grid">
                       {checks.map((c) => (
                         <section key={c.id} className={`check-card ${c.status}`}>
@@ -1049,7 +1093,7 @@ export default function App() {
                     </div>
                     <section className="panel observations">
                       <div className="section-heading">
-                        <h3>Observations du code et du harness</h3>
+                        <h3>Points à vérifier dans le code</h3>
                         <span>Règles statiques ciblées</span>
                       </div>
                       {observations.length ? (
@@ -1075,8 +1119,8 @@ export default function App() {
                         ))
                       ) : (
                         <p>
-                          Aucun motif signalé dans les contenus lus. Les droits effectifs,
-                          connexions MCP et déclenchements des hooks ne sont pas vérifiés.
+                          Aucun motif signalé dans les contenus lus. Ces observations ne prouvent
+                          pas que le programme ou ses tests fonctionnent.
                         </p>
                       )}
                     </section>

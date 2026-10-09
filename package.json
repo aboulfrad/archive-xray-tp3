@@ -15,7 +15,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run proof:mcp && npm run proof:harness && npm run test:coverage && vite build",
-    "demos": "node scripts/demos.mjs",
+    "demos": "node scripts/demos.mjs && node scripts/demo-cases.mjs",
     "prepare": "node scripts/install-hooks.mjs",
     "test:e2e": "playwright test",
     "proof:mcp": "node scripts/mcp-proof.mjs",

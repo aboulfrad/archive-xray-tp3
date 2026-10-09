@@ -16,9 +16,9 @@ Un enseignant ou un étudiant doit lire un projet ZIP, retrouver ses éléments 
 | Harness : règles, commandes, roles, permissions | opencode.json, .opencode/agents, commands, plugin, skill                                                              | Configurations livrées ; agents spécialisés non exécutés pendant le développement solo                                       |
 | MCP                                             | Deux outils en lecture seule, sans chemin libre                                                                       | SDK client/serveur utilisé réellement ; `opencode mcp list` affiche le serveur connecté                                      |
 | Hooks et vérifications                          | Git pre-commit, plugin post-edit, lint/types/tests/build/CI                                                           | Plugin testé directement avec une vraie erreur TypeScript ; déclenchement post-edit dans une session OpenCode non revendiqué |
-| Vérifications automatiques                      | 119 tests Vitest et 8 scénarios Playwright                                                                            | Résultats locaux conservés ; couverture 100 % lignes, 97,28 % branches du moteur                                             |
+| Vérifications automatiques                      | 130 tests Vitest et 11 scénarios Playwright                                                                           | Résultats locaux conservés ; couverture 100 % lignes, 97,56 % branches du moteur                                             |
 | Robustesse mise à l’épreuve                     | ZIP malformés, tailles falsifiées, traversée, CRC, budget, chiffrement, noms trompeurs, secrets, reprise après erreur | Scénarios ciblés et limites documentées                                                                                      |
-| Lancement simple                                | README, Dockerfile, serveur minimal, /health                                                                          | Build Railway réussi ; URL publique, point de santé et huit parcours publics vérifiés                                        |
+| Lancement simple                                | README, Dockerfile, serveur minimal, /health                                                                          | Build Railway réussi ; URL publique, point de santé et onze parcours publics vérifiés                                        |
 | Présentation courte puis démo                   | PITCH.md et quatre ZIP fictifs                                                                                        | Parcours reproductible ; aucune donnée du TP2 publiée dans les démos                                                         |
 
 ## Distinctions nécessaires pour une présentation honnête
@@ -48,3 +48,9 @@ Inspection statique ciblée, pas antivirus. Présence de tests et CI repérée, 
 ## Sources pédagogiques relues
 
 `sujet-tp3.pdf`, le contenu de `Consigne.md`, `Cours IA - IUT 2026.pdf`, rapports TP1 et TP2 de l’auteur. Les fichiers du cours restent dans le dossier pédagogique et ne sont pas redistribués dans le dépôt.
+
+## Révision avant l’oral
+
+À la demande explicite de l’auteur, trois sous-agents de l’environnement Codex ont contribué aux tests de checklist, au diagnostic HTTP local du TP1 personnel (agrégats uniquement) et à la documentation. Cela ne revendique ni des sessions d’agents OpenCode ni un audit indépendant. La révision initiale reste sauvegardée dans `backup/avant-checklist` et dans un ZIP séparé.
+
+Checklist personnelle (fichier, extension, dossier), profil site web, messages d’aperçu clarifiés et archive synthétique de 34 fichiers illustrant les principaux cas de figure. Le TP1 privé reste sur l’appareil ; seules les données fictives et des preuves agrégées sont livrées. Guide : DEMO-ORAL.md.

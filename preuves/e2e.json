@@ -55,7 +55,7 @@
         "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
         "timeout": 30000,
         "use": {
-          "baseURL": "https://archive-xray-production.up.railway.app",
+          "baseURL": "http://127.0.0.1:3000",
           "viewport": {
             "width": 1440,
             "height": 1000
@@ -129,12 +129,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2133,
+                  "duration": 1693,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:26.658Z",
+                  "startTime": "2026-10-09T10:22:54.962Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -163,12 +163,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1165,
+                  "duration": 673,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:30.169Z",
+                  "startTime": "2026-10-09T10:22:58.498Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -178,7 +178,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-0de3c0b80443515dab22",
           "file": "app.spec.ts",
-          "line": 73,
+          "line": 74,
           "column": 1
         },
         {
@@ -197,12 +197,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 739,
+                  "duration": 342,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:31.342Z",
+                  "startTime": "2026-10-09T10:22:59.179Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -212,7 +212,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-52c7289c7e0b9d0f82d7",
           "file": "app.spec.ts",
-          "line": 120,
+          "line": 121,
           "column": 1
         },
         {
@@ -231,12 +231,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1032,
+                  "duration": 655,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:32.089Z",
+                  "startTime": "2026-10-09T10:22:59.530Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -246,7 +246,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-1efe8cb25f9c6e777eb4",
           "file": "app.spec.ts",
-          "line": 143,
+          "line": 144,
           "column": 1
         },
         {
@@ -265,12 +265,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 887,
+                  "duration": 515,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:33.129Z",
+                  "startTime": "2026-10-09T10:23:00.193Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -280,7 +280,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-2c01168c19ef471f4a34",
           "file": "app.spec.ts",
-          "line": 183,
+          "line": 184,
           "column": 1
         },
         {
@@ -299,12 +299,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 840,
+                  "duration": 400,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:34.024Z",
+                  "startTime": "2026-10-09T10:23:00.717Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -314,7 +314,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-c5d054a638b0d09e1c3a",
           "file": "app.spec.ts",
-          "line": 213,
+          "line": 214,
           "column": 1
         },
         {
@@ -333,12 +333,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 893,
+                  "duration": 62,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:34.874Z",
+                  "startTime": "2026-10-09T10:23:01.127Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -348,7 +348,7 @@
           ],
           "id": "c31ff144dc4fee3acd0a-39bf5a8cba8cc5bb6c95",
           "file": "app.spec.ts",
-          "line": 230,
+          "line": 231,
           "column": 1
         },
         {
@@ -367,12 +367,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 908,
+                  "duration": 422,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-09T04:40:35.776Z",
+                  "startTime": "2026-10-09T10:23:01.195Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -382,7 +382,109 @@
           ],
           "id": "c31ff144dc4fee3acd0a-9e945f3938c93d62bc25",
           "file": "app.spec.ts",
-          "line": 250,
+          "line": 251,
+          "column": 1
+        },
+        {
+          "title": "checklist personnelle : critères, rapport masqué et configuration réutilisable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 694,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:23:01.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-6bef03c75575b9b0393b",
+          "file": "app.spec.ts",
+          "line": 273,
+          "column": 1
+        },
+        {
+          "title": "image illisible : message de repli, sans exception ni blocage de l’interface",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 420,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:23:02.328Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-cff51349626209fe21b6",
+          "file": "app.spec.ts",
+          "line": 328,
+          "column": 1
+        },
+        {
+          "title": "archive des cas de figure : explications et rapport sans secrets fictifs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 580,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-09T10:23:02.756Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-c415e11a1712439fc5c7",
+          "file": "app.spec.ts",
+          "line": 361,
           "column": 1
         }
       ]
@@ -390,9 +492,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-09T04:40:26.381Z",
-    "duration": 10453.583999999999,
-    "expected": 8,
+    "startTime": "2026-10-09T10:22:54.636Z",
+    "duration": 8801.315999999999,
+    "expected": 11,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

@@ -3,17 +3,20 @@
 > playwright test
 
 
-Running 8 tests using 1 worker
+Running 11 tests using 1 worker
 
-(node:12420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:18006) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (1.6s)
-  ✓  2 e2e/app.spec.ts:73:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (690ms)
-  ✓  3 e2e/app.spec.ts:120:1 › une archive invalide ne casse pas la prochaine importation (332ms)
-  ✓  4 e2e/app.spec.ts:143:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (681ms)
-  ✓  5 e2e/app.spec.ts:183:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (534ms)
-  ✓  6 e2e/app.spec.ts:213:1 › interface mobile sans débordement horizontal (421ms)
-  ✓  7 e2e/app.spec.ts:230:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (29ms)
-  ✓  8 e2e/app.spec.ts:250:1 › les alertes répétées restent bornées et le fichier suspect reste exclu (424ms)
+  ✓   1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (1.7s)
+  ✓   2 e2e/app.spec.ts:74:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (673ms)
+  ✓   3 e2e/app.spec.ts:121:1 › une archive invalide ne casse pas la prochaine importation (342ms)
+  ✓   4 e2e/app.spec.ts:144:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (655ms)
+  ✓   5 e2e/app.spec.ts:184:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (515ms)
+  ✓   6 e2e/app.spec.ts:214:1 › interface mobile sans débordement horizontal (400ms)
+  ✓   7 e2e/app.spec.ts:231:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (62ms)
+  ✓   8 e2e/app.spec.ts:251:1 › les alertes répétées restent bornées et le fichier suspect reste exclu (422ms)
+  ✓   9 e2e/app.spec.ts:273:1 › checklist personnelle : critères, rapport masqué et configuration réutilisable (694ms)
+  ✓  10 e2e/app.spec.ts:328:1 › image illisible : message de repli, sans exception ni blocage de l’interface (420ms)
+  ✓  11 e2e/app.spec.ts:361:1 › archive des cas de figure : explications et rapport sans secrets fictifs (580ms)
 
-  8 passed (6.6s)
+  11 passed (8.8s)
