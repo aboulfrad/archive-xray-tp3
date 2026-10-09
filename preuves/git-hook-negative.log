@@ -1,0 +1,19 @@
+
+> archive-xray@1.0.0 check
+> npm run format:check && npm run lint && npm run typecheck && npm run proof:mcp && npm run proof:harness && npm run test:coverage && vite build
+
+
+> archive-xray@1.0.0 format:check
+> prettier --check src test e2e scripts *.md *.ts *.js *.json
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> archive-xray@1.0.0 lint
+> eslint .
+
+
+> archive-xray@1.0.0 typecheck
+> tsc --noEmit
+
+src/git-negative-fixture.ts(1,14): error TS2322: Type 'string' is not assignable to type 'number'.

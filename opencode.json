@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "builder",
+  "instructions": ["AGENTS.md", "DESIGN.md", "SECURITY.md", "TESTPLAN.md"],
+  "permission": {
+    "task": "deny",
+    "external_directory": "deny",
+    "edit": { "*": "allow", ".env": "deny", ".env.*": "deny", ".env.example": "allow" },
+    "bash": {
+      "*": "ask",
+      "npm run *": "allow",
+      "npm audit*": "allow",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "rm *": "deny",
+      "git push*": "ask"
+    },
+    "archive_contract_*": "allow"
+  },
+  "mcp": {
+    "archive_contract": {
+      "type": "local",
+      "command": ["node", "scripts/mcp-server.mjs"],
+      "enabled": true,
+      "timeout": 5000
+    }
+  }
+}

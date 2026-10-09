@@ -1,0 +1,50 @@
+{
+  "name": "archive-xray",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "start": "node scripts/serve.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run proof:mcp && npm run proof:harness && npm run test:coverage && vite build",
+    "demos": "node scripts/demos.mjs",
+    "prepare": "node scripts/install-hooks.mjs",
+    "test:e2e": "playwright test",
+    "proof:mcp": "node scripts/mcp-proof.mjs",
+    "proof:harness": "node scripts/harness-proof.mjs",
+    "format:check": "prettier --check src test e2e scripts *.md *.ts *.js *.json"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "lucide-react": "^0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "latest",
+    "@vitest/coverage-v8": "^5.0.3",
+    "eslint": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "globals": "latest",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.0",
+    "typescript-eslint": "latest",
+    "vite": "latest",
+    "vitest": "^5.0.3",
+    "zod": "^4.6.5"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "time": "2026-10-09T03:32:51.729Z",
+  "transport": "stdio",
+  "client": "SDK MCP officiel, pas un appel de modèle",
+  "tools": [
+    "read_contract",
+    "explain_check"
+  ],
+  "contractRead": true,
+  "example": {
+    "content": [
+      {
+        "type": "text",
+        "text": "CRC32 et taille réelle contrôlés après lecture. Le CRC détecte des corruptions mais ne constitue pas une preuve cryptographique."
+      }
+    ]
+  },
+  "arbitrarySelectorRejected": true
+}
