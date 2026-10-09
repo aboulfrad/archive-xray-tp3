@@ -121,6 +121,19 @@ describe('comparaison de rendus', () => {
 });
 
 describe('export contrôlé et origine inchangée', () => {
+  test.each([
+    ['folder', 'folder/readme.txt'],
+    ['folder/readme.txt', 'folder'],
+    ['Folder', 'folder/readme.txt'],
+    ['folder', 'FOLDER\\readme.txt'],
+    ['café', 'cafe\u0301/readme.txt'],
+    ['a/b', 'a/b/c/d.txt'],
+  ])('refuse un conflit fichier/dossier : %s et %s', (a, b) => {
+    const bytes = zip({ [a]: 'a', [b]: 'b' });
+    expect(() => exportFiltered(bytes, parseZip(bytes), new Set([0, 1]))).toThrow(/Collision/);
+    const single = exportFiltered(bytes, parseZip(bytes), new Set([1]));
+    expect(parseZip(single)).toHaveLength(1);
+  });
   test('ré-exporte uniquement la sélection, préserve les octets et revérifie le CRC', () => {
     const original = zip({
       'README.md': 'Read',

@@ -21,7 +21,7 @@ All matched files use Prettier code style!
 > node scripts/mcp-proof.mjs
 
 {
-  "time": "2026-10-09T03:48:30.799Z",
+  "time": "2026-10-09T04:13:00.755Z",
   "transport": "stdio",
   "client": "SDK MCP officiel, pas un appel de modèle",
   "tools": [
@@ -43,12 +43,12 @@ All matched files use Prettier code style!
 > archive-xray@1.0.0 proof:harness
 > node scripts/harness-proof.mjs
 
-(node:5631) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
+(node:8905) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-runtime/.opencode/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 {
-  "time": "2026-10-09T03:48:33.692Z",
+  "time": "2026-10-09T04:13:03.734Z",
   "scope": "Hooks appelés directement par un test de composant ; aucun déclenchement dans une session OpenCode revendiqué.",
   "secretReadDenied": true,
   "outsideProjectDenied": true,
@@ -66,25 +66,25 @@ To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-run
 
 
  Test Files  4 passed (4)
-      Tests  99 passed (99)
-   Start at  05:48:34
-   Duration  485ms (tests 64%, transform 24%, import 6%, worker 6%)
+      Tests  108 passed (108)
+   Start at  06:13:04
+   Duration  504ms (tests 63%, transform 25%, import 6%, worker 6%)
 
  % Coverage report from v8
 ------------|---------|----------|---------|---------|-----------------------
 File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s     
 ------------|---------|----------|---------|---------|-----------------------
-All files   |   99.57 |     97.7 |     100 |     100 |                       
- inspect.ts |     100 |     99.2 |     100 |     100 | 342                   
+All files   |    99.6 |    97.77 |     100 |     100 |                       
+ inspect.ts |     100 |    99.28 |     100 |     100 | 376                   
  project.ts |     100 |    92.77 |     100 |     100 | 21,47,196,231,287-296 
  zip.ts     |    98.8 |    97.87 |     100 |     100 | 23,192,240            
 ------------|---------|----------|---------|---------|-----------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.57% ( 472/474 )
-Branches     : 97.7% ( 426/436 )
-Functions    : 100% ( 69/69 )
-Lines        : 100% ( 422/422 )
+Statements   : 99.6% ( 498/500 )
+Branches     : 97.77% ( 440/450 )
+Functions    : 100% ( 70/70 )
+Lines        : 100% ( 446/446 )
 ================================================================================
 vite v7.3.7 building client environment for production...
 transforming...
@@ -92,7 +92,7 @@ transforming...
 rendering chunks...
 computing gzip size...
 dist/index.html                           0.67 kB │ gzip:  0.42 kB
-dist/assets/archive.worker-CDzm2iRd.js   27.75 kB
+dist/assets/archive.worker-BlLFZlaR.js   28.32 kB
 dist/assets/index-DajWVbRT.css           31.97 kB │ gzip:  7.71 kB
-dist/assets/index-mdDLhHH4.js           275.55 kB │ gzip: 86.15 kB
-✓ built in 1.05s
+dist/assets/index-BOM0QBeO.js           275.72 kB │ gzip: 86.24 kB
+✓ built in 926ms

@@ -241,4 +241,8 @@ test('serveur : santé, HEAD, POST interdit et headers de sécurité', async ({ 
   const home = await request.get('/');
   expect(home.headers()['content-security-policy']).toContain("connect-src 'self'");
   expect(home.headers()['x-content-type-options']).toBe('nosniff');
+  expect(home.headers()['strict-transport-security']).toBe('max-age=31536000');
+  for (const path of ['/.env', '/.git/config', '/%2e%2e%2fpackage.json']) {
+    expect((await request.get(path)).status()).toBe(403);
+  }
 });

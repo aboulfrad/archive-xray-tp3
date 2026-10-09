@@ -389,7 +389,7 @@ export default function App() {
                   f.severity === 'critical' ||
                   f.rule === 'env' ||
                   f.rule.startsWith('secret-') ||
-                  ['noise', 'macos', 'duplicate'].includes(f.rule),
+                  ['noise', 'macos', 'duplicate', 'path-conflict'].includes(f.rule),
               )
               .map((f) => f.fileId),
           );

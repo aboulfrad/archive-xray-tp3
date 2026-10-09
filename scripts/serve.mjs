@@ -20,6 +20,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('Referrer-Policy', 'no-referrer');
   res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
   if (!['GET', 'HEAD'].includes(req.method)) {
     res.writeHead(405, { Allow: 'GET, HEAD' });
     res.end();
@@ -39,7 +40,11 @@ const server = http.createServer((req, res) => {
     return;
   }
   const filename = path.resolve(root, '.' + pathname);
-  if (pathname.includes('\0') || (filename !== root && !filename.startsWith(root + path.sep))) {
+  if (
+    pathname.includes('\0') ||
+    pathname.split('/').some((segment) => segment.startsWith('.')) ||
+    (filename !== root && !filename.startsWith(root + path.sep))
+  ) {
     res.writeHead(403);
     res.end();
     return;

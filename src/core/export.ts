@@ -9,10 +9,10 @@ export function exportFiltered(
 ): Uint8Array {
   const files: Record<string, Uint8Array> = Object.create(null) as Record<string, Uint8Array>;
   const names = new Set<string>();
-  let total = 0,
-    count = 0;
-  for (const e of entries) {
-    if (e.directory || !selected.has(e.id)) continue;
+  const chosen = entries.filter((e) => !e.directory && selected.has(e.id));
+  if (!chosen.length) throw new ArchiveError('Sélectionnez au moins un fichier à exporter.');
+  let total = 0;
+  for (const e of chosen) {
     if (
       unsafePath(e.path) ||
       e.symlink ||
@@ -29,9 +29,18 @@ export function exportFiltered(
     total += e.size;
     if (total > LIMITS.exportBytes)
       throw new ArchiveError('La sélection dépasse la limite d’export de 32 Mo.');
-    files[name] = readEntry(buffer, e, Math.min(LIMITS.exportBytes, e.size));
-    count++;
   }
-  if (!count) throw new ArchiveError('Sélectionnez au moins un fichier à exporter.');
+  for (const name of names) {
+    for (let slash = name.indexOf('/'); slash !== -1; slash = name.indexOf('/', slash + 1)) {
+      if (names.has(name.slice(0, slash)))
+        throw new ArchiveError('Collision entre fichier et dossier : modifiez la sélection.');
+    }
+  }
+  for (const e of chosen)
+    files[e.path.replaceAll('\\', '/')] = readEntry(
+      buffer,
+      e,
+      Math.min(LIMITS.exportBytes, e.size),
+    );
   return zipSync(files, { level: 0 });
 }

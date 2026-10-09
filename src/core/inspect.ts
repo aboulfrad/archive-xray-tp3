@@ -146,6 +146,26 @@ export function metadataFindings(entries: ArchiveEntry[]): Finding[] {
       );
     else names.set(canonical, e);
   }
+  for (const e of entries) {
+    const canonical = e.path.replaceAll('\\', '/').normalize('NFC').toLowerCase();
+    for (
+      let slash = canonical.indexOf('/');
+      slash !== -1;
+      slash = canonical.indexOf('/', slash + 1)
+    ) {
+      const parent = names.get(canonical.slice(0, slash));
+      if (parent && !parent.directory) {
+        add(
+          e,
+          'path-conflict',
+          'warning',
+          'Conflit entre fichier et dossier',
+          `Un fichier occupe le chemin parent ${parent.path}. Ces deux fichiers ne peuvent pas être exportés ensemble.`,
+        );
+        break;
+      }
+    }
+  }
   return findings;
 }
 export function secretFindings(entry: ArchiveEntry): Finding[] {
@@ -194,11 +214,25 @@ export function secretFindings(entry: ArchiveEntry): Finding[] {
   return findings;
 }
 export function redactText(text: string): string {
-  return text
-    .replace(
-      /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/g,
-      '[CLÉ PRIVÉE MASQUÉE]',
-    )
+  const parts: string[] = [];
+  let depth = 0,
+    cursor = 0;
+  // Scan markers once; repeated unclosed BEGIN markers must not cause quadratic backtracking.
+  for (const marker of text.matchAll(/-----(BEGIN|END) (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/g)) {
+    if (marker[1] === 'BEGIN') {
+      if (depth === 0) parts.push(text.slice(cursor, marker.index));
+      depth++;
+    } else if (depth > 0) {
+      depth--;
+      if (depth === 0) {
+        parts.push('[CLÉ PRIVÉE MASQUÉE]');
+        cursor = marker.index + marker[0].length;
+      }
+    }
+  }
+  parts.push(depth > 0 ? '[CLÉ PRIVÉE MASQUÉE]' : text.slice(cursor));
+  return parts
+    .join('')
     .replace(
       /\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[A-Z0-9]{16}|sk-(?:proj-)?[A-Za-z0-9_-]{24,})\b/g,
       '[TOKEN MASQUÉ]',

@@ -84,6 +84,24 @@ describe('constats expliqués', () => {
 });
 
 describe('inspection bornée', () => {
+  test('masque les clés privées incomplètes, même avec beaucoup de marqueurs', () => {
+    const input = 'before\n' + '-----BEGIN PRIVATE KEY-----\n'.repeat(12000) + 'SensitivePayload';
+    expect(redactText(input)).toBe('before\n[CLÉ PRIVÉE MASQUÉE]');
+  });
+  test('masque les blocs imbriqués et conserve le texte après fermeture', () => {
+    const input =
+      'before-----BEGIN PRIVATE KEY-----one-----BEGIN EC PRIVATE KEY-----two-----END EC PRIVATE KEY-----three-----END PRIVATE KEY-----after';
+    expect(redactText(input)).toBe('before[CLÉ PRIVÉE MASQUÉE]after');
+    const stray = '-----END PRIVATE KEY-----without begin';
+    expect(redactText(stray)).toBe(stray);
+  });
+  test('signale le conflit d’un fichier utilisé comme dossier parent', async () => {
+    const a = await inspectArchive(
+      zip({ Folder: 'file', 'folder/readme.txt': 'nested' }),
+      'conflict.zip',
+    );
+    expect(a.findings.find((f) => f.rule === 'path-conflict')?.path).toBe('folder/readme.txt');
+  });
   test('lit les textes et marque précisément le contenu non lu', async () => {
     const progress = vi.fn();
     const a = await inspectArchive(
