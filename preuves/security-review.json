@@ -1,5 +1,5 @@
 {
-  "reviewedAt": "2026-10-09T04:37:33.574785+00:00",
+  "reviewedAt": "2026-10-09T04:39:33.704797+00:00",
   "reviewType": "same-agent manual review and regression tests; not independent audit",
   "gitleaks": {
     "version": "8.30.1",
@@ -130,8 +130,10 @@
     "evidence": [
       "check.log",
       "e2e-local.log",
-      "coverage-summary.json"
-    ]
+      "coverage-summary.json",
+      "e2e-public.log"
+    ],
+    "browserTestsPassedPublic": 8
   },
   "fixed": [
     "ZIP export file/directory conflicts",
@@ -150,5 +152,17 @@
     "No container OS vulnerability scan (local Docker daemon unavailable)",
     "Native image decoding relies on browser",
     "Secret detection is heuristic; no absence-of-vulnerability guarantee"
-  ]
+  ],
+  "reviewedSourceCommit": "5e6137fbd4d689956080ba179065cf032076c0a8",
+  "production": {
+    "url": "https://archive-xray-production.up.railway.app",
+    "deployment": "c6a40645-b26c-428c-b25b-dbcb6ebb656f",
+    "homeStatus": 200,
+    "headersVerified": [
+      "Content-Security-Policy",
+      "Strict-Transport-Security",
+      "X-Content-Type-Options"
+    ],
+    "uploadEndpoint": "absent; server accepts GET/HEAD only"
+  }
 }

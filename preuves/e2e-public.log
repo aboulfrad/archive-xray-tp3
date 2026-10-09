@@ -3,16 +3,17 @@
 > playwright test
 
 
-Running 7 tests using 1 worker
+Running 8 tests using 1 worker
 
-(node:6114) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:12645) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
-  ✓  1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (2.0s)
+  ✓  1 e2e/app.spec.ts:13:1 › parcours complet : inspection, recherche, annotation, rapport, diff et export (2.1s)
   ✓  2 e2e/app.spec.ts:73:1 › archive piégée : chemin bloqué, secret masqué, Markdown inerte et export filtré (1.2s)
-  ✓  3 e2e/app.spec.ts:120:1 › une archive invalide ne casse pas la prochaine importation (741ms)
+  ✓  3 e2e/app.spec.ts:120:1 › une archive invalide ne casse pas la prochaine importation (739ms)
   ✓  4 e2e/app.spec.ts:143:1 › le diff ne dévoile pas les secrets et la prévisualisation résiste à beaucoup de lignes (1.0s)
-  ✓  5 e2e/app.spec.ts:183:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (936ms)
-  ✓  6 e2e/app.spec.ts:213:1 › interface mobile sans débordement horizontal (830ms)
-  ✓  7 e2e/app.spec.ts:230:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (574ms)
+  ✓  5 e2e/app.spec.ts:183:1 › aperçu PNG réel et refus d’une image aux dimensions excessives (887ms)
+  ✓  6 e2e/app.spec.ts:213:1 › interface mobile sans débordement horizontal (840ms)
+  ✓  7 e2e/app.spec.ts:230:1 › serveur : santé, HEAD, POST interdit et headers de sécurité (893ms)
+  ✓  8 e2e/app.spec.ts:250:1 › les alertes répétées restent bornées et le fichier suspect reste exclu (908ms)
 
-  7 passed (8.3s)
+  8 passed (10.5s)

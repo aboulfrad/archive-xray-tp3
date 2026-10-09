@@ -1,8 +1,15 @@
 {
-  "id": "9fa95240-54c8-4f71-a9ad-560b91718921",
+  "id": "c6a40645-b26c-428c-b25b-dbcb6ebb656f",
   "status": "SUCCESS",
-  "createdAt": "2026-10-09T03:48:46.934Z",
+  "createdAt": "2026-10-09T04:39:04.279Z",
   "url": "https://archive-xray-production.up.railway.app",
   "port": 8080,
-  "builder": "DOCKERFILE"
+  "builder": "DOCKERFILE",
+  "imageDigest": "sha256:27ab20ea53464609d1583cdcc0a7febc34d253920cf9325f574c4d512d2db57a",
+  "sourceCommit": "5e6137fbd4d689956080ba179065cf032076c0a8",
+  "verifiedAt": "2026-10-09T04:41:22.817868+00:00",
+  "homeStatus": 200,
+  "healthStatus": 200,
+  "publicBrowserTestsPassed": 8,
+  "evidence": "e2e-public.log"
 }

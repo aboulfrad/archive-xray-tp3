@@ -8,7 +8,7 @@ https://archive-xray-production.up.railway.app
 
 Dépôt : https://github.com/aboulfrad/archive-xray-tp3
 
-CI : [exécution réussie du workflow Validation](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37881961703), preuve détaillée dans `preuves/github-ci.json`.
+CI : [exécution réussie du workflow Validation](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37884821149), preuve détaillée dans `preuves/github-ci.json`.
 
 ## Démarrer
 
