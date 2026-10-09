@@ -25,7 +25,7 @@ Un enseignant ou un étudiant doit lire un projet ZIP, retrouver ses éléments 
 
 La conception a été conduite **en solo avec Codex**, conformément à la demande de l’auteur. Les rôles OpenCode préparés ne prouvent pas une collaboration multi-agent. Le MCP a réellement été connecté depuis OpenCode, mais aucune session de génération OpenCode ni revue indépendante par son agent reviewer n’est revendiquée.
 
-Le plugin a bloqué une erreur de type dans un test de composant. Cela prouve son comportement, pas son déclenchement dans une session de modèle. Une vraie tentative de commit a été refusée par le Git hook avec une erreur TypeScript ; voir preuves/git-hook.json. Le Git hook et la CI apportent des contrôles séparés. La configuration de CI doit être distinguée d’un run distant effectif, dont le résultat sera lié dans preuves/ s’il est disponible.
+Le plugin a bloqué une erreur de type dans un test de composant. Cela prouve son comportement, pas son déclenchement dans une session de modèle. Une vraie tentative de commit a été refusée par le Git hook avec une erreur TypeScript ; voir preuves/git-hook.json. Le Git hook et la CI apportent des contrôles séparés. Le [workflow GitHub Validation a réellement réussi](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37881961703) : installation, contrôles bloquants, build et tests navigateur. La révision vérifiée et les métadonnées sont conservées dans preuves/github-ci.json.
 
 Ces écarts d’outillage par rapport à une exigence d’usage exclusivement OpenCode doivent être présentés au professeur, sans les masquer derrière les fichiers de configuration. Aucune note, récompense ou conformité intégrale n’est garantie.
 
@@ -33,6 +33,7 @@ Ces écarts d’outillage par rapport à une exigence d’usage exclusivement Op
 
 - `preuves/check.log` : lint, TypeScript strict, Vitest, couverture et build production.
 - `preuves/e2e.json` : parcours navigateur exécutés.
+- `preuves/github-ci.json` : exécution distante GitHub Actions réussie, lien et commit vérifié.
 - `captures/01-accueil.png` à `07-mobile.png` : captures d’exécutions réelles, contenus fictifs uniquement.
 - `preuves/audit.json` : audit npm, zéro vulnérabilité signalée à l’exécution.
 - `preuves/mcp.json` : handshake SDK, outils, appel et sélecteur invalide refusé.

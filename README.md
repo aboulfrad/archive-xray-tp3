@@ -8,6 +8,8 @@ https://archive-xray-production.up.railway.app
 
 Dépôt : https://github.com/aboulfrad/archive-xray-tp3
 
+CI : [exécution réussie du workflow Validation](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37881961703), preuve détaillée dans `preuves/github-ci.json`.
+
 ## Démarrer
 
 Node.js 24 recommandé (minimum 22.12), npm. Aucun modèle, clé API ou compte nécessaire pour utiliser l’application.
