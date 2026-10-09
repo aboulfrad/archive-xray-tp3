@@ -12,6 +12,11 @@ export function metadataFindings(entries: ArchiveEntry[]): Finding[] {
     title: string,
     detail: string,
   ) => {
+    if (
+      severity === 'critical' ||
+      ['env', 'noise', 'macos', 'duplicate', 'path-conflict'].includes(rule)
+    )
+      e.exportExcluded = true;
     findings.push({
       id: `${e.id}:${rule}`,
       rule,
@@ -196,6 +201,20 @@ export function secretFindings(entry: ArchiveEntry): Finding[] {
         )
       )
         continue;
+      entry.exportExcluded = true;
+      if (findings.length >= LIMITS.secretsPerFile) {
+        findings.push({
+          id: `${entry.id}:secret-limit`,
+          rule: 'secret-limit',
+          severity: 'warning',
+          title: 'Liste de secrets abrégée',
+          detail:
+            'Plus de 25 correspondances dans ce fichier. La liste est partielle ; ce fichier reste exclu de l’export par défaut.',
+          fileId: entry.id,
+          path: entry.path,
+        });
+        return findings;
+      }
       findings.push({
         id: `${entry.id}:secret:${i}:${rule}`,
         rule: `secret-${rule}`,
@@ -286,10 +305,17 @@ export async function inspectArchive(
   progress?: (done: number, total: number) => void,
 ): Promise<ArchiveAnalysis> {
   const entries = parseZip(buffer);
-  const findings = metadataFindings(entries);
+  const initial = metadataFindings(entries);
+  const findings = initial.slice(0, LIMITS.findings);
+  let omitted = initial.length - findings.length;
+  const addFindings = (...values: Finding[]) => {
+    const available = LIMITS.findings - findings.length;
+    findings.push(...values.slice(0, available));
+    omitted += Math.max(0, values.length - available);
+  };
   let contentBytes = 0,
     inspectedCount = 0;
-  const blocked = new Set(findings.filter((f) => f.severity === 'critical').map((f) => f.fileId));
+  const blocked = new Set(initial.filter((f) => f.severity === 'critical').map((f) => f.fileId));
   const priority = [...entries].sort((a, b) => {
     const important = (e: ArchiveEntry) =>
       /(^|\/)(readme[^/]*|package\.json|opencode\.json|agents\.md|skill\.md|\.env[^/]*)$/i.test(
@@ -324,7 +350,7 @@ export async function inspectArchive(
         contentBytes += bytes.length;
         const mismatch = magic(bytes, e.path);
         if (mismatch)
-          findings.push({
+          addFindings({
             id: `${e.id}:magic`,
             rule: 'magic',
             severity: 'warning',
@@ -351,7 +377,7 @@ export async function inspectArchive(
           else {
             e.reason =
               'Aperçu refusé : dimensions inconnues ou supérieures à 4 millions de pixels / 8192 px';
-            findings.push({
+            addFindings({
               id: `${e.id}:image-bounds`,
               rule: 'image-bounds',
               severity: 'warning',
@@ -365,10 +391,11 @@ export async function inspectArchive(
         if (!e.text && !e.bytes && !e.reason && bytes.length) e.reason = 'Format sans aperçu';
         e.inspected = true;
         inspectedCount++;
-        findings.push(...secretFindings(e));
+        addFindings(...secretFindings(e));
       } catch (error) {
+        e.exportExcluded = true;
         e.reason = 'Contenu corrompu ou décompression bloquée';
-        findings.push({
+        addFindings({
           id: `${e.id}:read`,
           rule: 'read-error',
           severity: 'critical',
@@ -381,6 +408,14 @@ export async function inspectArchive(
     }
     progress?.(i + 1, priority.length);
   }
+  if (omitted)
+    findings.push({
+      id: 'finding-limit',
+      rule: 'finding-limit',
+      severity: 'warning',
+      title: 'Liste de constats abrégée',
+      detail: `${omitted} constats supplémentaires ne sont pas affichés. L’analyse est partielle ; les exclusions de l’export restent appliquées à tous les fichiers.`,
+    });
   return {
     name,
     byteLength: buffer.length,

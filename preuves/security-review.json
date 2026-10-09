@@ -1,0 +1,154 @@
+{
+  "reviewedAt": "2026-10-09T04:37:33.574785+00:00",
+  "reviewType": "same-agent manual review and regression tests; not independent audit",
+  "gitleaks": {
+    "version": "8.30.1",
+    "gitHistoryAllRefs": true,
+    "historyAlerts": 6,
+    "artifactAlerts": 6,
+    "confirmedRealSecrets": 0,
+    "scannerExitCode": 1,
+    "exitExplanation": "Scanner reports fixture matches; each was manually reviewed. No blanket rule exclusions were applied.",
+    "matches": [
+      {
+        "scope": "git-history",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 88,
+        "commit": "a244851ca4ab1f7b801393c5db36d039a5b1159a",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "git-history",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 93,
+        "commit": "a244851ca4ab1f7b801393c5db36d039a5b1159a",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "git-history",
+        "rule": "generic-api-key",
+        "file": "e2e/app.spec.ts",
+        "line": 153,
+        "commit": "7fea230b4c3f951727bbce656459386639b8b976",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "git-history",
+        "rule": "generic-api-key",
+        "file": "e2e/app.spec.ts",
+        "line": 163,
+        "commit": "7fea230b4c3f951727bbce656459386639b8b976",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "git-history",
+        "rule": "generic-api-key",
+        "file": "test/inspect.spec.ts",
+        "line": 93,
+        "commit": "7fea230b4c3f951727bbce656459386639b8b976",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "git-history",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 51,
+        "commit": "7fea230b4c3f951727bbce656459386639b8b976",
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "generic-api-key",
+        "file": "e2e/app.spec.ts",
+        "line": 153,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "generic-api-key",
+        "file": "e2e/app.spec.ts",
+        "line": 163,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 51,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 88,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "private-key",
+        "file": "test/inspect.spec.ts",
+        "line": 93,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      },
+      {
+        "scope": "source-and-production-build",
+        "rule": "generic-api-key",
+        "file": "test/inspect.spec.ts",
+        "line": 111,
+        "commit": null,
+        "classification": "synthetic-test-fixture",
+        "review": "Fixed literals and intentionally invalid private-key markers inspected in the referenced test code; no real service credential."
+      }
+    ]
+  },
+  "dependencyAudit": {
+    "evidence": "audit.json",
+    "knownVulnerabilities": 0
+  },
+  "regressions": {
+    "unitTestsPassed": 119,
+    "browserTestsPassedLocal": 8,
+    "evidence": [
+      "check.log",
+      "e2e-local.log",
+      "coverage-summary.json"
+    ]
+  },
+  "fixed": [
+    "ZIP export file/directory conflicts",
+    "linear redaction of incomplete and nested private keys",
+    "bounded findings, secret and harness lists with visible truncation",
+    "export exclusions retained independently from displayed findings",
+    "aggregate ZIP filename and tree budgets",
+    "local and central ZIP extra field ambiguity checks",
+    "inert untrusted Markdown report values",
+    "bounded HTTP connection/time limits and stream error handling",
+    "GitHub Actions pinned to verified official commit SHAs"
+  ],
+  "limitations": [
+    "No independent penetration test",
+    "No host/account/session audit",
+    "No container OS vulnerability scan (local Docker daemon unavailable)",
+    "Native image decoding relies on browser",
+    "Secret detection is heuristic; no absence-of-vulnerability guarantee"
+  ]
+}

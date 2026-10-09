@@ -99,6 +99,23 @@ export function parseZip(buffer: Uint8Array): ArchiveEntry[] {
   if (start + length !== end)
     throw new ArchiveError('Le répertoire ZIP est incohérent ou tronqué.');
   const entries: ArchiveEntry[] = [];
+  let nameBytes = 0;
+  const treeNodes = new Set<string>();
+  const validateExtra = (position: number, length: number) => {
+    const end = position + length;
+    while (position < end) {
+      if (position + 4 > end) throw new ArchiveError('Champ supplémentaire ZIP tronqué.');
+      const id = view.getUint16(position, true);
+      const size = view.getUint16(position + 2, true);
+      if (id === 1) throw new ArchiveError('Les entrées ZIP64 ne sont pas prises en charge.');
+      if (id === 0x7075)
+        throw new ArchiveError(
+          'Les champs Unicode remplaçant le nom ZIP ne sont pas pris en charge.',
+        );
+      position += 4 + size;
+      if (position > end) throw new ArchiveError('Champ supplémentaire ZIP invalide.');
+    }
+  };
   const intervals: [number, number][] = [];
   let p = start,
     total = 0;
@@ -120,21 +137,7 @@ export function parseZip(buffer: Uint8Array): ArchiveEntry[] {
       throw new ArchiveError('Métadonnées ZIP invalides.');
     if ([compressedSize, size, localOffset].includes(0xffffffff))
       throw new ArchiveError('Les entrées ZIP64 ne sont pas prises en charge.');
-    let extraPosition = p + 46 + nameLength;
-    while (extraPosition < extra + p + 46 + nameLength) {
-      if (extraPosition + 4 > p + 46 + nameLength + extra)
-        throw new ArchiveError('Champ supplémentaire ZIP tronqué.');
-      const extraSize = view.getUint16(extraPosition + 2, true);
-      if (view.getUint16(extraPosition, true) === 0x7075)
-        throw new ArchiveError(
-          'Les champs Unicode remplaçant le nom ZIP ne sont pas pris en charge.',
-        );
-      if (view.getUint16(extraPosition, true) === 1)
-        throw new ArchiveError('Les entrées ZIP64 ne sont pas prises en charge.');
-      extraPosition += 4 + extraSize;
-      if (extraPosition > p + 46 + nameLength + extra)
-        throw new ArchiveError('Champ supplémentaire ZIP invalide.');
-    }
+    validateExtra(p + 46 + nameLength, extra);
     if (localOffset + 30 > start || view.getUint32(localOffset, true) !== 0x04034b50)
       throw new ArchiveError('En-tête local ZIP invalide.');
     const localNameLength = view.getUint16(localOffset + 26, true),
@@ -148,6 +151,7 @@ export function parseZip(buffer: Uint8Array): ArchiveEntry[] {
     ) {
       throw new ArchiveError('Les en-têtes locaux et centraux ne correspondent pas.');
     }
+    validateExtra(localOffset + 30 + localNameLength, localExtraLength);
     for (let j = 0; j < nameLength; j++) {
       if (buffer[p + 46 + j] !== buffer[localOffset + 30 + j])
         throw new ArchiveError('Noms locaux et centraux contradictoires.');
@@ -164,6 +168,17 @@ export function parseZip(buffer: Uint8Array): ArchiveEntry[] {
     const path = decodeName(buffer.subarray(p + 46, p + 46 + nameLength), flags);
     if (nameLength > 4096 || path.replaceAll('\\', '/').split('/').length > 65)
       throw new ArchiveError('Nom de fichier trop long ou arborescence supérieure à 64 niveaux.');
+    nameBytes += nameLength;
+    if (nameBytes > LIMITS.nameBytes)
+      throw new ArchiveError('Volume cumulé des noms supérieur à 1 Mo.');
+    const segments = path.replaceAll('\\', '/').split('/');
+    let prefix = '';
+    for (const segment of segments) {
+      prefix += `${segment}/`;
+      treeNodes.add(prefix);
+      if (treeNodes.size > LIMITS.treeNodes)
+        throw new ArchiveError('Arborescence supérieure à 10 000 éléments.');
+    }
     const mode = (attrs >>> 16) & 0xffff;
     const symlink = (mode & 0xf000) === 0xa000;
     const directory = path.endsWith('/') || (attrs & 0x10) !== 0 || (mode & 0xf000) === 0x4000;

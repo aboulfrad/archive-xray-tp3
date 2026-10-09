@@ -79,7 +79,7 @@ export default function FileTree({
   );
   function render(node: Node, depth: number) {
     const directory = node.children.length > 0 || node.entry?.directory;
-    const open = !closed.has(node.path);
+    const open = (depth === 0) !== closed.has(node.path);
     return (
       <div key={`${node.path}:${node.entry?.id ?? 'd'}`}>
         <button

@@ -399,6 +399,7 @@ export default function App() {
                 .filter(
                   (e) =>
                     !e.directory &&
+                    !e.exportExcluded &&
                     !blocked.has(e.id) &&
                     !(e.flags & 1) &&
                     [0, 8].includes(e.method),

@@ -21,3 +21,5 @@ Les résultats d’exécution sont conservés dans preuves/. Une configuration o
 `npm run check` impose lint, TypeScript strict, tests Vitest avec couverture (85 % lignes/instructions/fonctions et 75 % branches minimum) et build production. `npm run test:e2e` utilise Chromium et le serveur production. Les seuils ne sont pas abaissés pour livrer.
 
 `npm run proof:mcp` est un échange réel client/serveur MCP. `npm run proof:harness` injecte temporairement une erreur TypeScript, vérifie son blocage puis la retire et revérifie le succès. C’est une preuve de composant, distincte du déclenchement du plugin dans une session OpenCode.
+
+Régressions de sécurité : budgets globaux des noms/arbre/alertes, maintien des exclusions au-delà du plafond, plafonds des observations, champs supplémentaires locaux ambigus ou tronqués, contenu Markdown hostile rendu en code inerte.

@@ -27,6 +27,7 @@ export interface ArchiveEntry {
   text?: string;
   bytes?: Uint8Array;
   inspected: boolean;
+  exportExcluded?: boolean;
   reason?: string;
 }
 export interface ArchiveAnalysis {
@@ -61,6 +62,10 @@ export interface ComparisonEntry {
 export const LIMITS = Object.freeze({
   archiveBytes: 64 * 1024 * 1024,
   files: 2500,
+  findings: 500,
+  secretsPerFile: 25,
+  nameBytes: 1024 * 1024,
+  treeNodes: 10000,
   declaredTotal: 256 * 1024 * 1024,
   previewBytes: 1024 * 1024,
   contentBudget: 12 * 1024 * 1024,

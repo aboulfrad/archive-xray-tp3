@@ -70,12 +70,22 @@ const server = http.createServer((req, res) => {
         : 'no-cache',
     });
     if (req.method === 'HEAD') res.end();
-    else fs.createReadStream(target).pipe(res);
+    else {
+      const stream = fs.createReadStream(target);
+      stream.on('error', () => res.destroy());
+      res.on('close', () => stream.destroy());
+      stream.pipe(res);
+    }
   } catch {
     res.writeHead(503);
     res.end('Le build de l’application est absent. Lancez npm run build.');
   }
 });
+server.headersTimeout = 10000;
+server.requestTimeout = 15000;
+server.keepAliveTimeout = 5000;
+server.maxConnections = 256;
+server.maxRequestsPerSocket = 100;
 server.listen(Number(process.env.PORT ?? 3000), '0.0.0.0', () =>
   console.log(`Archive X-Ray écoute sur le port ${process.env.PORT ?? 3000}`),
 );

@@ -21,7 +21,7 @@ All matched files use Prettier code style!
 > node scripts/mcp-proof.mjs
 
 {
-  "time": "2026-10-09T04:13:00.755Z",
+  "time": "2026-10-09T04:36:22.219Z",
   "transport": "stdio",
   "client": "SDK MCP officiel, pas un appel de modèle",
   "tools": [
@@ -43,12 +43,12 @@ All matched files use Prettier code style!
 > archive-xray@1.0.0 proof:harness
 > node scripts/harness-proof.mjs
 
-(node:8905) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
+(node:11771) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///private/tmp/archive-xray-runtime/.opencode/plugins/validation.js is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-runtime/.opencode/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 {
-  "time": "2026-10-09T04:13:03.734Z",
+  "time": "2026-10-09T04:36:25.133Z",
   "scope": "Hooks appelés directement par un test de composant ; aucun déclenchement dans une session OpenCode revendiqué.",
   "secretReadDenied": true,
   "outsideProjectDenied": true,
@@ -65,34 +65,34 @@ To eliminate this warning, add "type": "module" to /private/tmp/archive-xray-run
       Coverage enabled with v8
 
 
- Test Files  4 passed (4)
-      Tests  108 passed (108)
-   Start at  06:13:04
-   Duration  504ms (tests 63%, transform 25%, import 6%, worker 6%)
+ Test Files  5 passed (5)
+      Tests  118 passed (118)
+   Start at  06:36:25
+   Duration  534ms (tests 58%, transform 29%, import 7%, worker 6%)
 
  % Coverage report from v8
-------------|---------|----------|---------|---------|-----------------------
-File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s     
-------------|---------|----------|---------|---------|-----------------------
-All files   |    99.6 |    97.77 |     100 |     100 |                       
- inspect.ts |     100 |    99.28 |     100 |     100 | 376                   
- project.ts |     100 |    92.77 |     100 |     100 | 21,47,196,231,287-296 
- zip.ts     |    98.8 |    97.87 |     100 |     100 | 23,192,240            
-------------|---------|----------|---------|---------|-----------------------
+------------|---------|----------|---------|---------|--------------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s        
+------------|---------|----------|---------|---------|--------------------------
+All files   |   99.45 |    97.46 |     100 |     100 |                          
+ inspect.ts |     100 |    99.31 |     100 |     100 | 403                      
+ project.ts |   99.15 |    91.57 |     100 |     100 | ...1-169,208,249,310-319 
+ zip.ts     |    98.9 |    97.93 |     100 |     100 | 23,207,255               
+------------|---------|----------|---------|---------|--------------------------
 
 =============================== Coverage summary ===============================
-Statements   : 99.6% ( 498/500 )
-Branches     : 97.77% ( 440/450 )
-Functions    : 100% ( 70/70 )
-Lines        : 100% ( 446/446 )
+Statements   : 99.45% ( 551/554 )
+Branches     : 97.46% ( 462/474 )
+Functions    : 100% ( 71/71 )
+Lines        : 100% ( 492/492 )
 ================================================================================
 vite v7.3.7 building client environment for production...
 transforming...
 ✓ 1587 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                           0.67 kB │ gzip:  0.42 kB
-dist/assets/archive.worker-BlLFZlaR.js   28.32 kB
+dist/index.html                           0.67 kB │ gzip:  0.41 kB
+dist/assets/archive.worker-DY3b9H42.js   29.51 kB
 dist/assets/index-DajWVbRT.css           31.97 kB │ gzip:  7.71 kB
-dist/assets/index-BOM0QBeO.js           275.72 kB │ gzip: 86.24 kB
-✓ built in 926ms
+dist/assets/index-DveTryIv.js           276.11 kB │ gzip: 86.41 kB
+✓ built in 906ms

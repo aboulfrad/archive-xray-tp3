@@ -84,7 +84,7 @@ describe('préparer une lecture et un rapport', () => {
     expect(report).toContain('inside.zip');
     expect(report).toContain('Aucun code ni test');
     expect(report).toContain('\\|');
-    expect(report).toContain('archive : À vérifier');
+    expect(report).toContain('` archive ` : ` À vérifier `');
   });
   test('le rapport sans signal explicite la portée limitée', async () => {
     const a = await inspectArchive(zip({ 'README.md': '# Hi' }), 'clear.zip');

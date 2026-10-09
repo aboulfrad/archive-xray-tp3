@@ -246,3 +246,25 @@ test('serveur : santé, HEAD, POST interdit et headers de sécurité', async ({ 
     expect((await request.get(path)).status()).toBe(403);
   }
 });
+
+test('les alertes répétées restent bornées et le fichier suspect reste exclu', async ({ page }) => {
+  await page.goto('/');
+  await page
+    .locator('input[type=file]')
+    .first()
+    .setInputFiles({
+      name: 'many-alerts.zip',
+      mimeType: 'application/zip',
+      buffer: sample({
+        'keys.txt': 'password=ArtificialValue123\n'.repeat(12000),
+        'README.md': '# Safe documentation',
+      }),
+    });
+  await expect(page.getByRole('heading', { name: 'many-alerts.zip', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: /Points d’attention/ }).click();
+  await expect(page.getByText('Liste de secrets abrégée', { exact: true })).toBeVisible();
+  await expect(page.getByText('ArtificialValue123', { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Rapport & export', exact: true }).click();
+  const keyRow = page.locator('.selection-list label').filter({ hasText: 'keys.txt' });
+  await expect(keyRow.locator('input[type=checkbox]')).not.toBeChecked();
+});

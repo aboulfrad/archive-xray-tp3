@@ -157,7 +157,16 @@ export function harnessObservations(
   analysis: ArchiveAnalysis,
 ): { path: string; message: string; line?: number }[] {
   const result: { path: string; message: string; line?: number }[] = [];
+  const add = (value: (typeof result)[number]) => {
+    if (result.length < 150) result.push(value);
+    else if (result.length === 150)
+      result.push({
+        path: 'archive',
+        message: 'Liste abrégée : d’autres observations peuvent être présentes.',
+      });
+  };
   for (const e of analysis.entries) {
+    if (result.length > 150) break;
     if (
       !e.text ||
       /(^|\/)(node_modules|\.git|\.venv|venv|__pycache__)(\/|$)/.test(e.path.replaceAll('\\', '/'))
@@ -174,46 +183,51 @@ export function harnessObservations(
           typeof value.scripts === 'object'
         ) {
           for (const [key, command] of Object.entries(value.scripts)) {
+            if (result.length > 150) break;
             if (
               typeof command === 'string' &&
               /(?:\|\|\s*true|exit\s+0|echo\s+.*(?:pass|success|ok))/i.test(command)
             )
-              result.push({
+              add({
                 path: e.path,
-                message: `Le script « ${key} » contient un motif pouvant masquer un échec. À examiner ; ce n’est pas une preuve de contournement.`,
+                message: `Le script « ${key.slice(0, 120)}${key.length > 120 ? '…' : ''} » contient un motif pouvant masquer un échec. À examiner ; ce n’est pas une preuve de contournement.`,
               });
           }
         }
       } catch {
-        result.push({
+        add({
           path: e.path,
           message: 'Le manifeste package.json n’est pas un JSON valide.',
         });
       }
     }
     if (/\.(test|spec)\.|(^|\/)test_/.test(e.path.replaceAll('\\', '/'))) {
-      e.text.split('\n').forEach((line, i) => {
+      const lines = e.text.split('\n');
+      for (let i = 0; i < lines.length && result.length <= 150; i++) {
+        const line = lines[i]!;
         if (/\b(?:test|it|describe)\.(?:skip|todo)\b|expect\(true\)\.toBe\(true\)/.test(line))
-          result.push({
+          add({
             path: e.path,
             line: i + 1,
             message:
               'Test ignoré, à écrire ou assertion triviale repéré. Vérifiez sa justification.',
           });
-      });
+      }
     }
     if (/\.(ts|tsx)$/.test(e.path.replaceAll('\\', '/'))) {
-      e.text.split('\n').forEach((line, i) => {
+      const lines = e.text.split('\n');
+      for (let i = 0; i < lines.length && result.length <= 150; i++) {
+        const line = lines[i]!;
         if (/@ts-nocheck/.test(line))
-          result.push({
+          add({
             path: e.path,
             line: i + 1,
             message: 'Vérification TypeScript désactivée dans ce fichier.',
           });
-      });
+      }
     }
   }
-  return result.slice(0, 150);
+  return result;
 }
 export function compareArchives(
   before: ArchiveAnalysis,
@@ -222,12 +236,18 @@ export function compareArchives(
   const map = (a: ArchiveAnalysis) => {
     const result = new Map<string, ArchiveEntry>();
     const counts = new Map<string, number>();
-    for (const e of a.entries.filter((e) => !e.directory)) {
-      const path = relativePath(e, a.entries);
+    const files = a.entries.filter((e) => !e.directory);
+    const root = projectRoot(a.entries);
+    const relative = (e: ArchiveEntry) => {
+      const path = e.path.replaceAll('\\', '/');
+      return (path.startsWith(root) ? path.slice(root.length) : path).normalize('NFC');
+    };
+    for (const e of files) {
+      const path = relative(e);
       counts.set(path, (counts.get(path) ?? 0) + 1);
     }
-    for (const e of a.entries.filter((e) => !e.directory)) {
-      const path = relativePath(e, a.entries);
+    for (const e of files) {
+      const path = relative(e);
       result.set((counts.get(path) ?? 0) > 1 ? `${path} [entrée ${e.id}]` : path, e);
     }
     return result;
@@ -256,8 +276,13 @@ export function createReport(
   profile: Profile,
   annotations: Annotation[] = [],
 ): string {
-  const cell = (s: string) =>
-    redactText(s).replaceAll('|', '\\|').replaceAll('\n', ' ').replaceAll('\r', ' ');
+  const cell = (s: string) => {
+    const text = redactText(s).replaceAll('|', '\\|').replaceAll('\n', ' ').replaceAll('\r', ' ');
+    let longest = 0;
+    for (const match of text.matchAll(/`+/g)) longest = Math.max(longest, match[0].length);
+    const fence = '`'.repeat(longest + 1);
+    return `${fence} ${text} ${fence}`;
+  };
   const files = analysis.entries.filter((e) => !e.directory);
   const items = checklist(analysis, profile);
   const lines = [
