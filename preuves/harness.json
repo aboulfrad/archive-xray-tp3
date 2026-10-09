@@ -1,5 +1,5 @@
 {
-  "time": "2026-10-09T10:22:10.443Z",
+  "time": "2026-10-09T10:24:47.065Z",
   "scope": "Hooks appelés directement par un test de composant ; aucun déclenchement dans une session OpenCode revendiqué.",
   "secretReadDenied": true,
   "outsideProjectDenied": true,

@@ -1,10 +1,10 @@
 {
-  "id": 37884821149,
+  "id": 37917565634,
   "status": "completed",
   "conclusion": "success",
-  "commit": "5e6137fbd4d689956080ba179065cf032076c0a8",
-  "url": "https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37884821149",
-  "createdAt": "2026-10-09T04:38:26Z",
-  "checkedAt": "2026-10-09T04:40:50.053Z",
-  "scope": "Exécution réelle du workflow Validation : npm ci, npm run check, installation Chromium, huit tests Playwright."
+  "commit": "05d8183d2c055ee2706fffba0b687863a192e268",
+  "url": "https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37917565634",
+  "createdAt": "2026-10-09T10:26:01Z",
+  "checkedAt": "2026-10-09T10:28:09.746Z",
+  "scope": "Workflow Validation exécuté : npm ci, npm run check, build, onze tests Playwright."
 }

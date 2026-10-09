@@ -1,6 +1,6 @@
 {
-  "reviewedAt": "2026-10-09T04:39:33.704797+00:00",
-  "reviewType": "same-agent manual review and regression tests; not independent audit",
+  "reviewedAt": "2026-10-09T10:29:04.604453+00:00",
+  "reviewType": "Initial solo review, followed by targeted subagent tests/diagnostics/documentation and lead integration checks; not an independent audit",
   "gitleaks": {
     "version": "8.30.1",
     "gitHistoryAllRefs": true,
@@ -125,15 +125,15 @@
     "knownVulnerabilities": 0
   },
   "regressions": {
-    "unitTestsPassed": 119,
-    "browserTestsPassedLocal": 8,
+    "unitTestsPassed": 130,
+    "browserTestsPassedLocal": 11,
     "evidence": [
       "check.log",
       "e2e-local.log",
       "coverage-summary.json",
       "e2e-public.log"
     ],
-    "browserTestsPassedPublic": 8
+    "browserTestsPassedPublic": 11
   },
   "fixed": [
     "ZIP export file/directory conflicts",
@@ -153,10 +153,10 @@
     "Native image decoding relies on browser",
     "Secret detection is heuristic; no absence-of-vulnerability guarantee"
   ],
-  "reviewedSourceCommit": "5e6137fbd4d689956080ba179065cf032076c0a8",
+  "reviewedSourceCommit": "05d8183d2c055ee2706fffba0b687863a192e268",
   "production": {
     "url": "https://archive-xray-production.up.railway.app",
-    "deployment": "c6a40645-b26c-428c-b25b-dbcb6ebb656f",
+    "deployment": "883872b5-4f6d-4cb1-9ca1-d412b99a746d",
     "homeStatus": 200,
     "headersVerified": [
       "Content-Security-Policy",
@@ -164,5 +164,9 @@
       "X-Content-Type-Options"
     ],
     "uploadEndpoint": "absent; server accepts GET/HEAD only"
-  }
+  },
+  "additionalEvidence": [
+    "checklist-demo.json",
+    "tp1-diagnostic.json"
+  ]
 }

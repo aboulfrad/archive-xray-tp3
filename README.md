@@ -8,7 +8,7 @@ https://archive-xray-production.up.railway.app
 
 Dépôt : https://github.com/aboulfrad/archive-xray-tp3
 
-CI : [exécution réussie du workflow Validation](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37884821149), preuve détaillée dans `preuves/github-ci.json`.
+CI : [exécution réussie du workflow Validation](https://github.com/aboulfrad/archive-xray-tp3/actions/runs/37917565634), preuve détaillée dans `preuves/github-ci.json`.
 
 ## Démarrer
 
@@ -28,7 +28,7 @@ Le ZIP de rendu contient aussi `dist/` : avec Node.js installé, `npm start` suf
 
 Déposer un ZIP, ou ouvrir l’une des quatre démonstrations. **Les cas de figure** (`public/demos/cas-de-figure.zip`) réunit des exemples synthétiques à examiner. Une cinquième archive, `public/demos/projet-version-2.zip`, sert à essayer la comparaison. Pour l’oral, le guide utilise seulement le TP1 personnel et le ZIP Cas de figure. Explorer les fichiers, rechercher dans les contenus lus, ajouter des annotations puis télécharger un rapport Markdown. L’export ZIP reconstruit les fichiers choisis sans modifier leurs octets ; il ne nettoie pas les secrets de fichiers conservés.
 
-La checklist s’adapte au ZIP : **Projet** pour des repères génériques, **Site web** pour un site, **Personnalisée** pour vos propres attentes. Les profils TP1/TP2/TP3 restent disponibles en option pour le cours.
+La checklist s’adapte au ZIP : **Projet** pour des repères génériques, **Site web** pour un site, **Ma checklist** pour vos propres attentes. Les profils TP1/TP2/TP3 restent disponibles en option pour le cours.
 
 En mode personnalisé, ajouter jusqu’à 20 règles : un nom de fichier (par exemple `README.md`), une extension (`.html`) ou un dossier contenant des fichiers (`assets`). Chaque règle donne les fichiers correspondants ou indique leur absence. Les correspondances sont littérales, sans expression régulière. Le libellé est limité à 80 caractères et la cible à 160 caractères.
 
